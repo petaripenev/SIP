@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 from dataclasses import dataclass
 
@@ -41,6 +42,7 @@ concentration4 = data['Unnamed: 12']
 class Sample:
     dbID: int
     name: str
+    well_location: list
     density: list
     concentration: list
 
@@ -49,28 +51,31 @@ class Sample:
             raise ValueError("Parameter dbID must be an int!")
         if not isinstance(self.name, str):
             raise ValueError("Parameter dbID must be a str!")
+        if not isinstance(self.well_location, list):
+            raise ValueError("Parameter well_location must be a list!")
         if not isinstance(self.density, list):
             raise ValueError("Parameter density must be a list!")
         if not isinstance(self.concentration, list):
             raise ValueError("Parameter concentration must be a list!")
         self.area = [a*b for a,b in zip(self.density,self.concentration)]
         self.weighted_mean_density = sum(self.area)/sum(self.concentration)
+        self.remainingDNAperFraction = [((abs(x)+x)/2)*37 for x in self.concentration]
 
 samples = list()
-samples.append(Sample(2018, dbID_to_namedID[2018], list(density1[3:22]), list(concentration1[3:22])))
-samples.append(Sample(2023, dbID_to_namedID[2023], list(density2[3:22]), list(concentration2[3:22])))
-samples.append(Sample(2028, dbID_to_namedID[2028], list(density3[3:22]), list(concentration3[3:22])))
-samples.append(Sample(2046, dbID_to_namedID[2046], list(density4[3:22]), list(concentration4[3:22])))
+samples.append(Sample(2018, dbID_to_namedID[2018], list(data[2018][3:22]), list(density1[3:22]), list(concentration1[3:22])))
+samples.append(Sample(2023, dbID_to_namedID[2023], list(data[2023][3:22]), list(density2[3:22]), list(concentration2[3:22])))
+samples.append(Sample(2028, dbID_to_namedID[2028], list(data[2028][3:22]), list(density3[3:22]), list(concentration3[3:22])))
+samples.append(Sample(2046, dbID_to_namedID[2046], list(data[2046][3:22]), list(density4[3:22]), list(concentration4[3:22])))
 
-samples.append(Sample(2049, dbID_to_namedID[2049], list(density1[31:50]), list(concentration1[31:50])))
-samples.append(Sample(2052, dbID_to_namedID[2052], list(density2[31:50]), list(concentration2[31:50])))
-samples.append(Sample(2033, dbID_to_namedID[2033], list(density3[31:50]), list(concentration3[31:50])))
-samples.append(Sample(2038, dbID_to_namedID[2038], list(density4[31:50]), list(concentration4[31:50])))
+samples.append(Sample(2049, dbID_to_namedID[2049], list(data[2018][31:50]), list(density1[31:50]), list(concentration1[31:50])))
+samples.append(Sample(2052, dbID_to_namedID[2052], list(data[2023][31:50]), list(density2[31:50]), list(concentration2[31:50])))
+samples.append(Sample(2033, dbID_to_namedID[2033], list(data[2028][31:50]), list(density3[31:50]), list(concentration3[31:50])))
+samples.append(Sample(2038, dbID_to_namedID[2038], list(data[2046][31:50]), list(density4[31:50]), list(concentration4[31:50])))
 
-samples.append(Sample(2043, dbID_to_namedID[2043], list(density1[58:77]), list(concentration1[58:77])))
-samples.append(Sample(2055, dbID_to_namedID[2055], list(density2[58:77]), list(concentration2[58:77])))
-samples.append(Sample(2058, dbID_to_namedID[2058], list(density3[58:77]), list(concentration3[58:77])))
-samples.append(Sample(2061, dbID_to_namedID[2061], list(density4[58:77]), list(concentration4[58:77])))
+samples.append(Sample(2043, dbID_to_namedID[2043], list(data[2018][58:77]), list(density1[58:77]), list(concentration1[58:77])))
+samples.append(Sample(2055, dbID_to_namedID[2055], list(data[2023][58:77]), list(density2[58:77]), list(concentration2[58:77])))
+samples.append(Sample(2058, dbID_to_namedID[2058], list(data[2028][58:77]), list(density3[58:77]), list(concentration3[58:77])))
+samples.append(Sample(2061, dbID_to_namedID[2061], list(data[2046][58:77]), list(density4[58:77]), list(concentration4[58:77])))
 
 def calcAtomPCT(wm16, isotopeShift):
     gcContent = (wm16-1.66)/0.098
@@ -95,6 +100,22 @@ def plotGraph(sample16, sample18, ax, title):
     ax.axvline(x = mean18, color = 'r', label = '18O')
     return True
 
+def splitsum(L,S):
+    result,t = [[]],0
+    for n in L:
+        if t>S:
+            r,v,t = (result,[n],n)
+        else:
+            r,v,t = (result[-1],n,t+n)
+        r.append(v)
+    return result
+
+def splitFractions(sampleList, targetDNA=120):
+    for sample in sampleList:
+        chunks = splitsum(sample.remainingDNAperFraction, targetDNA)
+        pass
+    return True
+
 samplePairs = dict()
 fig, axs = plt.subplots(2, 3, sharex=True, sharey=True, figsize=(16,10))
 
@@ -107,7 +128,7 @@ for num,iPair in enumerate(isotopePairs):
     atomPCTenrichment = calcAtomPCT(iso16O.weighted_mean_density, isotope_shift)
     print(f"{iso16O.dbID}:{iso16O.name}", f"{iso18O.dbID}:{iso18O.name}")
     print(atomPCTenrichment, isotope_shift, iso16O.weighted_mean_density, iso18O.weighted_mean_density)
-
+    print(iso18O.remainingDNAperFraction)
     samplePairs[iPair] = {'isotope_shift': isotope_shift,
                           'atomPCTenrichment': atomPCTenrichment}
     incubation = 7
@@ -117,6 +138,8 @@ for num,iPair in enumerate(isotopePairs):
     plotGraph(iso16O, iso18O, axs[row,col], f'{iso16O.name[:6]} days: {incubation}  at% enrichment: {atomPCTenrichment:.2f}%')
     #print(len(iso16O.density), len(iso18O.density), len(iso16O.concentration), len(iso18O.concentration))
 
+splitFractions(samples)
+
 for ax in axs.flat:
     ax.set_xlim(1.6, 1.8)
     ax.set(xlabel='density (g/ml)', ylabel='DNA (ng/ul)')
@@ -125,4 +148,4 @@ for ax in axs.flat:
     ax.label_outer()
 
 plt.plot()
-plt.savefig('figures/A4_D5_7-30_18Ocurves.svg', dpi=300)
+#plt.savefig('figures/A4_D5_7-30_18Ocurves.svg', dpi=300)
