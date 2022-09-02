@@ -136,21 +136,26 @@ def splitFractions(sampleList, targetDNA=120):
     return sampleList
 
 def chunkProperties(sample, chunk_ixes):
+    '''Split the dnaFractions, wells, and densities in the same chunks as the provided indexes'''
     chunk_ixes[0]=chunk_ixes[0]-1
     list_ixes=list(np.array(chunk_ixes).cumsum())
     chunked_fractions = lindexsplit(sample.remainingDNAperFraction, *list_ixes)[:-1]
-    wells = lindexsplit(sample.well_location, *list_ixes)[:-1]
+    chunked_wells = lindexsplit(sample.well_location, *list_ixes)[:-1]
+    chunked_densities = lindexsplit(sample.density, *list_ixes)[:-1]
+    sample.chunked_densities = chunked_densities
     sample.chunked_fractions = chunked_fractions
-    sample.chunked_wells = wells
+    sample.chunked_wells = chunked_wells
     return sample
 
 def improve_SIP_bins(sampleList, passThrough=0):
-    if passThrough+1 >= min([len(x.chunked_densities) for x in sampleList]):
+    if passThrough+1 >= max([len(x.chunked_densities) for x in sampleList]):
         return sampleList
     modifiedChunks = False
     lowestFractionFromSet = min([min(x.chunked_densities[passThrough]) for x in sampleList])
     for sample in sampleList:
         remove_indices = list()
+        if passThrough+1 >= len(sample.chunked_densities):
+            continue
         for i,density in enumerate(sample.chunked_densities[passThrough+1]):
             if density > lowestFractionFromSet:
                 modifiedChunks = True
@@ -164,10 +169,29 @@ def improve_SIP_bins(sampleList, passThrough=0):
     else:
         improve_SIP_bins(sampleList, passThrough=passThrough+1)
 
+#Binning first pass
+samples = splitFractions(samples, targetDNA=120)
+iso18Osamples = list()
+for sample in samples:
+    if '_18O-' in sample.name:
+        chunk_ixes = [len(x) for x in sample.chunked_fractions]
+        sample = chunkProperties(sample, chunk_ixes)
+        iso18Osamples.append(sample)
 
+#Binning second pass
+improve_SIP_bins(iso18Osamples)
+
+#Bin output
+for sample in iso18Osamples:
+    chunk_ixes = [len(x) for x in sample.chunked_densities]
+    sample = chunkProperties(sample, chunk_ixes)
+    print(f'{sample.name} \t','\t'.join([' '.join(x) for x in sample.chunked_wells]))
+    print(f'{sample.name} \t','\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
+    print(f'{sample.name} \t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
+
+#Plotting
 samplePairs = dict()
 fig, axs = plt.subplots(2, 3, sharex=True, sharey=True, figsize=(16,10))
-
 for num,iPair in enumerate(isotopePairs):
     col = num%3
     row = round(num/6+0.1)
@@ -175,44 +199,12 @@ for num,iPair in enumerate(isotopePairs):
     iso18O = [item for item in samples if item.dbID==iPair[1]][0]
     isotope_shift = iso18O.weighted_mean_density-iso16O.weighted_mean_density
     atomPCTenrichment = calcAtomPCT(iso16O.weighted_mean_density, isotope_shift)
-    print(f"{iso16O.dbID}:{iso16O.name}", f"{iso18O.dbID}:{iso18O.name}")
-    print(atomPCTenrichment, isotope_shift, iso16O.weighted_mean_density, iso18O.weighted_mean_density)
-    print(iso18O.remainingDNAperFraction)
     samplePairs[iPair] = {'isotope_shift': isotope_shift,
                           'atomPCTenrichment': atomPCTenrichment}
     incubation = 7
     if row == 1:
         incubation = 30
-
     plotGraph(iso16O, iso18O, axs[row,col], f'{iso16O.name[:6]} days: {incubation}  at% enrichment: {atomPCTenrichment:.2f}%')
-    #print(len(iso16O.density), len(iso18O.density), len(iso16O.concentration), len(iso18O.concentration))
-
-samples = splitFractions(samples, targetDNA=120)
-iso18Osamples = list()
-for sample in samples:
-    if '_18O-' in sample.name:
-        chunk_ixes = [len(x) for x in sample.chunked_fractions]
-        chunk_ixes[0]=chunk_ixes[0]-1
-        list_ixes=list(np.array(chunk_ixes).cumsum())
-        density_chunks = lindexsplit(sample.density, *list_ixes)[:-1]
-        wells = lindexsplit(sample.well_location, *list_ixes)[:-1]
-        sample.chunked_densities = density_chunks
-        sample.chunked_wells = wells
-        iso18Osamples.append(sample)
-        # print(sample.name)
-        # print('\t'.join([' '.join(x) for x in wells]))
-        # print('\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
-        # print('\t'.join([' '.join([f'{y:.2f}' for y in x]) for x in sample.chunked_fractions]))
-
-improve_SIP_bins(iso18Osamples)
-
-for sample in iso18Osamples:
-    chunk_ixes = [len(x) for x in sample.chunked_densities]
-    sample = chunkProperties(sample, chunk_ixes)
-    print(sample.name)
-    print('\t'.join([' '.join(x) for x in sample.chunked_wells]))
-    print('\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
-    print('\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
 
 for ax in axs.flat:
     ax.set_xlim(1.6, 1.8)
