@@ -69,7 +69,7 @@ samples.append(Sample(2046, dbID_to_namedID[2046], list(data[2046][3:22]), list(
 
 samples.append(Sample(2049, dbID_to_namedID[2049], list(data[2018][31:50]), list(density1[31:50]), list(concentration1[31:50])))
 samples.append(Sample(2052, dbID_to_namedID[2052], list(data[2023][31:50]), list(density2[31:50]), list(concentration2[31:50])))
-samples.append(Sample(2033, dbID_to_namedID[2033], list(data[2028][31:50]), list(density3[31:50]), list(concentration3[31:50])))
+samples.append(Sample(2033, dbID_to_namedID[2033], list(data[2028][31:48]), list(density3[31:48]), list(concentration3[31:48])))
 samples.append(Sample(2038, dbID_to_namedID[2038], list(data[2046][31:50]), list(density4[31:50]), list(concentration4[31:50])))
 
 samples.append(Sample(2043, dbID_to_namedID[2043], list(data[2018][58:77]), list(density1[58:77]), list(concentration1[58:77])))
@@ -100,6 +100,23 @@ def plotGraph(sample16, sample18, ax, title):
     ax.axvline(x = mean18, color = 'r', label = '18O')
     return True
 
+def lindexsplit(some_list, *args):
+    # Checks to see if any extra arguments were passed. If so,
+    # prepend the 0th index and append the final index of the 
+    # passed list. This saves from having to check for the beginning
+    # and end of args in the for-loop. Also, increment each value in 
+    # args to get the desired behavior.
+    if args:
+        args = (0,) + tuple(data+1 for data in args) + (len(some_list)+1,)
+
+    # For a little more brevity, here is the list comprehension of the following
+    # statements:
+    #    return [some_list[start:end] for start, end in zip(args, args[1:])]
+    my_list = []
+    for start, end in zip(args, args[1:]):
+        my_list.append(some_list[start:end])
+    return my_list
+
 def splitsum(L,S):
     result,t = [[]],0
     for n in L:
@@ -112,9 +129,41 @@ def splitsum(L,S):
 
 def splitFractions(sampleList, targetDNA=120):
     for sample in sampleList:
-        chunks = splitsum(sample.remainingDNAperFraction, targetDNA)
-        pass
-    return True
+        heavy_chunk = splitsum(sample.remainingDNAperFraction, targetDNA)[0]
+        light_chunk = splitsum(sample.remainingDNAperFraction[::-1], targetDNA)[0]
+        mid_chunks = splitsum(sample.remainingDNAperFraction[len(heavy_chunk):-len(light_chunk)], targetDNA)
+        sample.chunked_fractions = [heavy_chunk,*mid_chunks,light_chunk[::-1]]
+    return sampleList
+
+def chunkProperties(sample, chunk_ixes):
+    chunk_ixes[0]=chunk_ixes[0]-1
+    list_ixes=list(np.array(chunk_ixes).cumsum())
+    chunked_fractions = lindexsplit(sample.remainingDNAperFraction, *list_ixes)[:-1]
+    wells = lindexsplit(sample.well_location, *list_ixes)[:-1]
+    sample.chunked_fractions = chunked_fractions
+    sample.chunked_wells = wells
+    return sample
+
+def improve_SIP_bins(sampleList, passThrough=0):
+    if passThrough+1 >= min([len(x.chunked_densities) for x in sampleList]):
+        return sampleList
+    modifiedChunks = False
+    lowestFractionFromSet = min([min(x.chunked_densities[passThrough]) for x in sampleList])
+    for sample in sampleList:
+        remove_indices = list()
+        for i,density in enumerate(sample.chunked_densities[passThrough+1]):
+            if density > lowestFractionFromSet:
+                modifiedChunks = True
+                sample.chunked_densities[passThrough].append(density)
+                remove_indices.append(i)
+        if len(remove_indices) > 0:
+            sample.chunked_densities[passThrough+1] = list(np.delete(np.array(sample.chunked_densities[passThrough+1]),remove_indices))
+            sample.chunked_densities = [ele for ele in sample.chunked_densities if ele != []]
+    if modifiedChunks:
+        improve_SIP_bins(sampleList, passThrough=passThrough)
+    else:
+        improve_SIP_bins(sampleList, passThrough=passThrough+1)
+
 
 samplePairs = dict()
 fig, axs = plt.subplots(2, 3, sharex=True, sharey=True, figsize=(16,10))
@@ -138,7 +187,32 @@ for num,iPair in enumerate(isotopePairs):
     plotGraph(iso16O, iso18O, axs[row,col], f'{iso16O.name[:6]} days: {incubation}  at% enrichment: {atomPCTenrichment:.2f}%')
     #print(len(iso16O.density), len(iso18O.density), len(iso16O.concentration), len(iso18O.concentration))
 
-splitFractions(samples)
+samples = splitFractions(samples, targetDNA=120)
+iso18Osamples = list()
+for sample in samples:
+    if '_18O-' in sample.name:
+        chunk_ixes = [len(x) for x in sample.chunked_fractions]
+        chunk_ixes[0]=chunk_ixes[0]-1
+        list_ixes=list(np.array(chunk_ixes).cumsum())
+        density_chunks = lindexsplit(sample.density, *list_ixes)[:-1]
+        wells = lindexsplit(sample.well_location, *list_ixes)[:-1]
+        sample.chunked_densities = density_chunks
+        sample.chunked_wells = wells
+        iso18Osamples.append(sample)
+        # print(sample.name)
+        # print('\t'.join([' '.join(x) for x in wells]))
+        # print('\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
+        # print('\t'.join([' '.join([f'{y:.2f}' for y in x]) for x in sample.chunked_fractions]))
+
+improve_SIP_bins(iso18Osamples)
+
+for sample in iso18Osamples:
+    chunk_ixes = [len(x) for x in sample.chunked_densities]
+    sample = chunkProperties(sample, chunk_ixes)
+    print(sample.name)
+    print('\t'.join([' '.join(x) for x in sample.chunked_wells]))
+    print('\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
+    print('\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
 
 for ax in axs.flat:
     ax.set_xlim(1.6, 1.8)
