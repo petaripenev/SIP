@@ -69,7 +69,7 @@ samples.append(Sample(2046, dbID_to_namedID[2046], list(data[2046][3:22]), list(
 
 samples.append(Sample(2049, dbID_to_namedID[2049], list(data[2018][31:50]), list(density1[31:50]), list(concentration1[31:50])))
 samples.append(Sample(2052, dbID_to_namedID[2052], list(data[2023][31:50]), list(density2[31:50]), list(concentration2[31:50])))
-samples.append(Sample(2033, dbID_to_namedID[2033], list(data[2028][31:48]), list(density3[31:48]), list(concentration3[31:48])))
+samples.append(Sample(2033, dbID_to_namedID[2033], list(data[2028][31:50]), list(density3[31:50]), list(concentration3[31:50])))
 samples.append(Sample(2038, dbID_to_namedID[2038], list(data[2046][31:50]), list(density4[31:50]), list(concentration4[31:50])))
 
 samples.append(Sample(2043, dbID_to_namedID[2043], list(data[2018][58:77]), list(density1[58:77]), list(concentration1[58:77])))
@@ -86,18 +86,33 @@ def calcAtomPCT(wm16, isotopeShift):
     atomPCTconst = 1-0.002000429
     return 100*((m18-m16)/(m18Max-m16))*atomPCTconst
 
-def plotGraph(sample16, sample18, ax, title):
-    density16 = sample16.density 
+def plotGraph(sample18, ax, title, sample16=None):
+
     density18 = sample18.density 
-    conc16 = sample16.concentration 
     conc18 = sample18.concentration 
-    mean16 = sample16.weighted_mean_density 
     mean18 = sample18.weighted_mean_density
     ax.set_title(title)
-    ax.plot(density16, conc16, 'b-')
+    if sample16:
+        density16 = sample16.density
+        conc16 = sample16.concentration 
+        mean16 = sample16.weighted_mean_density
+        ax.plot(density16, conc16, 'b-')
+        ax.axvline(x = mean16, color = 'b',  alpha=0.5, label = '16O')
+        ax.axvline(x = mean18, color = 'r', alpha=0.5, label = '18O')
+        ax.plot(density18, conc18, 'r-')
+        return True
+    cm = plt.get_cmap('Dark2')
+    for i,(x,y) in enumerate(zip(sample18.chunked_densities,sample18.chunked_concentrations)):
+        if i+1 < len(sample18.chunked_densities):
+            x.append(sample18.chunked_densities[i+1][0])
+            #x.append((sample18.chunked_densities[i+1][0]+sample18.chunked_densities[i][-1])/2)
+            y.append(sample18.chunked_concentrations[i+1][0])
+            #y.append((sample18.chunked_concentrations[i+1][0]+sample18.chunked_concentrations[i][-1])/2)
+        ax.fill_between(x=x,
+                        y1=y,
+                        color=cm.colors[i],
+                        alpha=0.5)
     ax.plot(density18, conc18, 'r-')
-    ax.axvline(x = mean16, color = 'b', label = '16O')
-    ax.axvline(x = mean18, color = 'r', label = '18O')
     return True
 
 def lindexsplit(some_list, *args):
@@ -133,6 +148,8 @@ def splitFractions(sampleList, targetDNA=120):
         light_chunk = splitsum(sample.remainingDNAperFraction[::-1], targetDNA)[0]
         mid_chunks = splitsum(sample.remainingDNAperFraction[len(heavy_chunk):-len(light_chunk)], targetDNA)
         sample.chunked_fractions = [heavy_chunk,*mid_chunks,light_chunk[::-1]]
+        # chunks = splitsum(sample.remainingDNAperFraction, targetDNA)
+        # sample.chunked_fractions = chunks
     return sampleList
 
 def chunkProperties(sample, chunk_ixes):
@@ -140,9 +157,11 @@ def chunkProperties(sample, chunk_ixes):
     chunk_ixes[0]=chunk_ixes[0]-1
     list_ixes=list(np.array(chunk_ixes).cumsum())
     chunked_fractions = lindexsplit(sample.remainingDNAperFraction, *list_ixes)[:-1]
+    chunked_concentrations = lindexsplit(sample.concentration, *list_ixes)[:-1]
     chunked_wells = lindexsplit(sample.well_location, *list_ixes)[:-1]
     chunked_densities = lindexsplit(sample.density, *list_ixes)[:-1]
     sample.chunked_densities = chunked_densities
+    sample.chunked_concentrations = chunked_concentrations
     sample.chunked_fractions = chunked_fractions
     sample.chunked_wells = chunked_wells
     return sample
@@ -185,8 +204,12 @@ improve_SIP_bins(iso18Osamples)
 for sample in iso18Osamples:
     chunk_ixes = [len(x) for x in sample.chunked_densities]
     sample = chunkProperties(sample, chunk_ixes)
-    print(f'{sample.name} \t','\t'.join([' '.join(x) for x in sample.chunked_wells]))
-    print(f'{sample.name} \t','\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
+    # print(f'{sample.name} \t','\t'.join([' '.join(x) for x in sample.chunked_wells]))
+    # print(f'{sample.name} \t','\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
+    # print(f'{sample.name} \t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
+
+    print(f'{sample.name} \t','\t'.join(['-'.join(x) for x in sample.chunked_wells]))
+    print(f'{sample.name} \t','\t'.join([f'{np.average(x):.3f} {np.std(x):.3f}' for x in sample.chunked_densities]))
     print(f'{sample.name} \t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
 
 #Plotting
@@ -204,7 +227,10 @@ for num,iPair in enumerate(isotopePairs):
     incubation = 7
     if row == 1:
         incubation = 30
-    plotGraph(iso16O, iso18O, axs[row,col], f'{iso16O.name[:6]} days: {incubation}  at% enrichment: {atomPCTenrichment:.2f}%')
+    plotGraph(iso18O, 
+              axs[row,col], 
+              f'{iso16O.name[:6]} days: {incubation}  at% enrichment: {atomPCTenrichment:.2f}%',)
+              #sample16=iso16O)
 
 for ax in axs.flat:
     ax.set_xlim(1.6, 1.8)
@@ -214,4 +240,4 @@ for ax in axs.flat:
     ax.label_outer()
 
 plt.plot()
-#plt.savefig('figures/A4_D5_7-30_18Ocurves.svg', dpi=300)
+plt.savefig('figures/A4_D5_7-30_18Obins.svg', dpi=300)
