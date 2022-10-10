@@ -54,23 +54,27 @@ def recursively_shuffle_until_noFails(sip_entries:list, n=6):
     elif len(fail) == 0:
         return success
     elif len(fail) > 1:
-        success.extend(recursively_shuffle_until_noFails([x for sublist in fail for x in sublist]))
+        success.extend(recursively_shuffle_until_noFails([x for sublist in fail for x in sublist], n))
         return success
 
 sip_entries18, sip_entries16 = list(), list()
 sip_entries_withDB18, sip_entries_withDB16 = dict(), dict()
-n = 6
-with open('./data/all_samples_afterW7.csv') as csvFile:
+with open('./data/all_samples_afterW9.csv') as csvFile:
     reader = csv.reader(csvFile)
     #seed(int(sys.argv[1]))
-    seed(107)
+    seed(10)
     for row in reader:
+        #Skip lines starting with #
+        if '#' == row[0][0]:
+            continue
         #Site to exclude
-        if 'H' == row[1][0]:
-            continue
+        #if 'H' == row[1][0]:
+        #    continue
         #Weeks to exclude
-        if '6_D' in row[1] or '1_D' in row[1] or '4_D' in row[1]:
+        if '6_D' in row[1] or '1_D' in row[1]:
             continue
+        if 'HA7_D' in row[1] or 'HB7_D' in row[1] or 'HC7_D' in row[1]:
+            continue 
         #Depths to exclude
         if '_D4_' in row[1] or '_D2_' in row[1]:
             continue
@@ -88,22 +92,32 @@ with open('./data/all_samples_afterW7.csv') as csvFile:
         #     continue
         
         if '18O-' in row[1]:
-            sip_entries_withDB18[row[1]] = row[0].split('/')[4]
+            sip_entries_withDB18[row[1]] = (row[0].split('/')[4], row[9])
             sip_entries18.append(row[1])
         elif '16O-' in row[1]:
-            sip_entries_withDB16[row[1]] = row[0].split('/')[4]
+            sip_entries_withDB16[row[1]] = (row[0].split('/')[4], row[9])
             sip_entries16.append(row[1])
 
+n = 6
+shuffled_16O = recursively_shuffle_until_noFails(sip_entries16, n)
+shuffled_18O = recursively_shuffle_until_noFails(sip_entries18, n)
 
-shuffled_16O = recursively_shuffle_until_noFails(sip_entries16)
-shuffled_18O = recursively_shuffle_until_noFails(sip_entries18)
+print("16O groups:")
+for i,x in enumerate(shuffled_16O):
+    print(f"Group {i+1}")
+    for y in x:
+        print(f"{sip_entries_withDB16[y][0]}\t{y}\t{sip_entries_withDB16[y][1]}")
+    #print(','.join(x))
+    #print(','.join([sip_entries_withDB16[y] for y in x]))
 
-for x in shuffled_16O:
-    print(','.join(x))
-    print(','.join([sip_entries_withDB16[y] for y in x]))
-print(len(sip_entries16), len(shuffled_16O))
+print()
+print("18O groups:")
+for k,x in enumerate(shuffled_18O):
+    print(f"Group {i+k+2}")
+    for y in x:
+        print(f"{sip_entries_withDB18[y][0]}\t{y}\t{sip_entries_withDB18[y][1]}")
+    #print(','.join(x))
+    #print(','.join([sip_entries_withDB18[y] for y in x]))
 
-for x in shuffled_18O:
-    print(','.join(x))
-    print(','.join([sip_entries_withDB18[y] for y in x]))
-print(len(sip_entries18), len(shuffled_18O))
+print(f'Total 16O extractions: {len(sip_entries16)}. Total 16O groups: {len(shuffled_16O)}')
+print(f'Total 18O extractions: {len(sip_entries18)}. Total 18O groups: {len(shuffled_18O)}')

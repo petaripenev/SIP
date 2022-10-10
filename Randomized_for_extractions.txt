@@ -1,0 +1,369 @@
+16O groups:
+Group 1
+1472	AA3_D1_16O-7	4th floor Banfield mid row
+1009	AC2_D3_16O-0	
+3941	AC9_D5_16O-0	
+3984	HC9_D3_16O-0	
+1029	HA2_D5_16O-7	4th floor Banfield mid row
+3632	HB8_D1_16O-7	
+Group 2
+1006	AC2_D1_16O-7	4th floor Banfield mid row
+2435	HA5_D5_16O-7	4th floor Firestone 4th row
+3626	HC8_D5_16O-0	
+3185	AB7_D3_16O-7	4th floor Firestone 1st row
+2011	AC4_D3_16O-0	
+3932	AB9_D1_16O-0	
+Group 3
+1032	HB2_D1_16O-7	4th floor Banfield mid row
+3188	AC7_D1_16O-7	4th floor Firestone 1st row
+1494	AB3_D5_16O-0	
+1775	HB4_D3_16O-7	4th floor Banfield top row
+1471	AA3_D1_16O-0	
+3627	HA8_D1_16O-7	
+Group 4
+3974	HA9_D3_16O-0	
+1782	HC4_D5_16O-7	4th floor Banfield top row
+3192	AC7_D5_16O-7	4th floor Firestone 1st row
+1501	AC3_D3_16O-0	
+2418	HA5_D3_16O-0	
+3946	AA9_D5_16O-7	
+Group 5
+1755	HA4_D3_16O-0	
+1035	HB2_D3_16O-0	
+2382	AC5_D5_16O-7	
+1005	AC2_D1_16O-0	
+1514	HA3_D3_16O-0	
+1763	HC4_D1_16O-0	
+Group 6
+2420	HA5_D5_16O-0	
+1780	HC4_D3_16O-7	4th floor Banfield top row
+2353	AA5_D1_16O-0	
+3944	AA9_D3_16O-7	
+3977	HB9_D1_16O-0	
+1016	AC2_D5_16O-7	4th floor Banfield mid row
+Group 7
+2001	AA4_D3_16O-0	
+1523	HB3_D1_16O-0	
+1528	HB3_D3_16O-7	4th floor Banfield mid row
+3947	AB9_D1_16O-7	
+3172	AB7_D5_16O-0	
+3939	AC9_D3_16O-0	
+Group 8
+3168	AB7_D1_16O-0	
+2357	AA5_D5_16O-0	
+3989	HA9_D3_16O-7	
+2373	AB5_D1_16O-7	
+3937	AC9_D1_16O-0	
+1044	HC2_D1_16O-0	
+Group 9
+3972	HA9_D1_16O-0	
+3622	HC8_D1_16O-0	
+3163	AA7_D1_16O-0	
+1762	HB4_D5_16O-0	
+1502	AC3_D3_16O-7	4th floor Banfield mid row
+2426	HC5_D1_16O-0	
+Group 10
+2006	AB4_D3_16O-0	
+1753	HA4_D1_16O-0	
+979	AA2_D1_16O-0	
+3979	HB9_D3_16O-0	
+1511	HA3_D1_16O-7	4th floor Banfield mid row
+3982	HC9_D1_16O-0	
+Group 11
+4001	HC9_D5_16O-7	
+3183	AB7_D1_16O-7	4th floor Firestone 1st row
+1778	HC4_D1_16O-7	4th floor Banfield top row
+1023	HA2_D3_16O-7	4th floor Banfield mid row
+2440	HB5_D5_16O-7	4th floor Firestone 4th row
+1520	HA3_D5_16O-0	
+Group 12
+3624	HC8_D3_16O-0	
+1010	AC2_D3_16O-7	4th floor Banfield mid row
+3170	AB7_D3_16O-0	
+1028	HA2_D5_16O-0	
+1540	HC3_D3_16O-0	
+1770	HA4_D3_16O-7	4th floor Banfield top row
+Group 13
+1031	HB2_D1_16O-0	
+1041	HB2_D5_16O-0	
+3619	HB8_D3_16O-0	
+2013	AC4_D5_16O-0	
+2019	AB4_D1_16O-7	4th floor Banfield mid row
+1475	AA3_D3_16O-0	
+Group 14
+3976	HA9_D5_16O-0	
+3629	HA8_D3_16O-7	
+1015	AC2_D5_16O-0	
+2416	HA5_D1_16O-0	
+2368	AA5_D1_16O-7	
+2375	AB5_D3_16O-7	
+Group 15
+3167	AA7_D5_16O-0	
+1772	HA4_D5_16O-7	4th floor Banfield top row
+3637	HC8_D1_16O-7	
+2009	AC4_D1_16O-0	
+2445	HC5_D5_16O-7	4th floor Firestone 4th row
+3931	AA9_D5_16O-0	
+Group 16
+1498	AC3_D1_16O-7	4th floor Banfield mid row
+3641	HC8_D5_16O-7	
+1524	HB3_D1_16O-7	4th floor Banfield mid row
+980	AA2_D1_16O-7	4th floor Banfield mid row
+3182	AA7_D5_16O-7	4th floor Firestone 1st row
+3952	AC9_D1_16O-7	
+Group 17
+3956	AC9_D5_16O-7	
+3634	HB8_D3_16O-7	
+1767	HC4_D5_16O-0	
+3929	AA9_D3_16O-0	
+1488	AB3_D3_16O-0	
+2377	AB5_D5_16O-7	
+Group 18
+1541	HC3_D3_16O-7	4th floor Banfield mid row
+3639	HC8_D3_16O-7	
+1758	HB4_D1_16O-0	
+3951	AB9_D5_16O-7	
+2016	AA4_D3_16O-7	4th floor Banfield mid row
+2004	AB4_D1_16O-0	
+Group 19
+3190	AC7_D3_16O-7	4th floor Firestone 1st row
+1055	HC2_D5_16O-7	4th floor Banfield mid row
+2362	AB5_D5_16O-0	
+1003	AB2_D5_16O-7	4th floor Banfield mid row
+2008	AB4_D5_16O-0	
+3954	AC9_D3_16O-7	
+Group 20
+1533	HB3_D5_16O-0	
+1019	HA2_D1_16O-7	4th floor Banfield mid row
+1777	HB4_D5_16O-7	4th floor Banfield top row
+3987	HA9_D1_16O-7	
+2438	HB5_D3_16O-7	4th floor Firestone 4th row
+3999	HC9_D3_16O-7	
+Group 21
+990	AA2_D5_16O-7	4th floor Banfield mid row
+3934	AB9_D3_16O-0	
+1510	HA3_D1_16O-0	
+3981	HB9_D5_16O-0	
+3631	HA8_D5_16O-7	
+1484	AB3_D1_16O-0	
+Group 22
+1508	AC3_D5_16O-7	4th floor Banfield mid row
+3986	HC9_D5_16O-0	
+1045	HC2_D1_16O-7	4th floor Banfield mid row
+2355	AA5_D3_16O-0	
+1485	AB3_D1_16O-7	4th floor Banfield mid row
+1036	HB2_D3_16O-7	4th floor Banfield mid row
+Group 23
+1999	AA4_D1_16O-0	
+1773	HB4_D1_16O-7	4th floor Banfield top row
+2360	AB5_D3_16O-0	
+2425	HB5_D5_16O-0	
+3621	HB8_D5_16O-0	
+1022	HA2_D3_16O-0	
+Group 24
+1048	HC2_D3_16O-0	
+2378	AC5_D1_16O-7	
+2433	HA5_D3_16O-7	4th floor Firestone 4th row
+984	AA2_D3_16O-7	4th floor Banfield mid row
+1515	HA3_D3_16O-7	4th floor Banfield mid row
+2441	HC5_D1_16O-7	4th floor Firestone 4th row
+Group 25
+1482	AA3_D5_16O-7	4th floor Banfield mid row
+2026	AC4_D3_16O-7	4th floor Banfield mid row
+992	AB2_D1_16O-0	
+3612	HA8_D1_16O-0	
+3994	HB9_D3_16O-7	
+1757	HA4_D5_16O-0	
+Group 26
+2430	HC5_D5_16O-0	
+1497	AC3_D1_16O-0	
+2421	HB5_D1_16O-0	
+997	AB2_D3_16O-7	4th floor Banfield mid row
+2372	AA5_D5_16O-7	
+3180	AA7_D3_16O-7	4th floor Firestone 1st row
+Group 27
+2436	HB5_D1_16O-7	4th floor Firestone 4th row
+1536	HC3_D1_16O-0	
+1018	HA2_D1_16O-0	
+1476	AA3_D3_16O-7	4th floor Banfield mid row
+3942	AA9_D1_16O-7	
+2021	AB4_D3_16O-7	4th floor Banfield mid row
+Group 28
+3991	HA9_D5_16O-7	
+1537	HC3_D1_16O-7	4th floor Banfield mid row
+1760	HB4_D3_16O-0	
+2380	AC5_D3_16O-7	
+993	AB2_D1_16O-7	4th floor Banfield mid row
+1495	AB3_D5_16O-7	4th floor Banfield mid row
+Group 29
+1507	AC3_D5_16O-0	
+3936	AB9_D5_16O-0	
+3165	AA7_D3_16O-0	
+2358	AB5_D1_16O-0	
+2367	AC5_D5_16O-0	
+1768	HA4_D1_16O-7	4th floor Banfield top row
+Group 30
+2443	HC5_D3_16O-7	4th floor Firestone 4th row
+2365	AC5_D3_16O-0	
+1002	AB2_D5_16O-0	
+1489	AB3_D3_16O-7	4th floor Banfield mid row
+1042	HB2_D5_16O-7	4th floor Banfield mid row
+3636	HB8_D5_16O-7	
+Group 31
+3927	AA9_D1_16O-0	
+1765	HC4_D3_16O-0	
+3614	HA8_D3_16O-0	
+996	AB2_D3_16O-0	
+3997	HC9_D1_16O-7	
+3175	AC7_D3_16O-0	
+Group 32
+3949	AB9_D3_16O-7	
+3616	HA8_D5_16O-0	
+1481	AA3_D5_16O-0	
+1546	HC3_D5_16O-0	
+3996	HB9_D5_16O-7	
+989	AA2_D5_16O-0	
+Group 33
+1054	HC2_D5_16O-0	
+2024	AC4_D1_16O-7	4th floor Banfield mid row
+1527	HB3_D3_16O-0	
+2003	AA4_D5_16O-0	
+3173	AC7_D1_16O-0	
+983	AA2_D3_16O-0	
+Group 34
+2431	HA5_D1_16O-7	4th floor Firestone 4th row
+3992	HB9_D1_16O-7	
+3177	AC7_D5_16O-0	
+2363	AC5_D1_16O-0	
+3617	HB8_D1_16O-0	
+2428	HC5_D3_16O-0	
+Group 35
+3178	AA7_D1_16O-7	4th floor Firestone 1st row
+2423	HB5_D3_16O-0	
+2014	AA4_D1_16O-7	4th floor Banfield mid row
+3187	AB7_D5_16O-7	4th floor Firestone 1st row
+1049	HC2_D3_16O-7	4th floor Banfield mid row
+2370	AA5_D3_16O-7	
+
+18O groups:
+Group 36
+2455	HB5_D5_18O-7	4th floor Firestone 4th row
+969	HB2_D5_18O-7	4th floor Banfield mid row
+3969	AC9_D3_18O-7	
+1457	HB3_D3_18O-7	4th floor Banfield mid row
+963	HB2_D1_18O-7	4th floor Banfield mid row
+3652	HC8_D1_18O-7	
+Group 37
+3649	HB8_D3_18O-7	
+2451	HB5_D1_18O-7	4th floor Firestone 4th row
+1447	HA3_D1_18O-7	4th floor Banfield mid row
+2387	AA5_D5_18O-7	4th floor Firestone 4th row
+2039	AC4_D1_18O-7	4th floor Banfield mid row
+3967	AC9_D1_18O-7	
+Group 38
+945	AB2_D5_18O-7	4th floor Banfield mid row
+961	HA2_D5_18O-7	4th floor Banfield mid row
+2388	AB5_D1_18O-7	4th floor Firestone 4th row
+3957	AA9_D1_18O-7	
+3964	AB9_D3_18O-7	
+941	AB2_D3_18O-7	4th floor Banfield mid row
+Group 39
+2448	HA5_D3_18O-7	4th floor Firestone 4th row
+2383	AA5_D1_18O-7	4th floor Firestone 4th row
+3202	AB7_D5_18O-7	4th floor Firestone 1st row
+4016	HC9_D5_18O-7	
+3961	AA9_D5_18O-7	
+947	AC2_D1_18O-7	4th floor Banfield mid row
+Group 40
+3654	HC8_D3_18O-7	
+1433	AB3_D3_18O-7	4th floor Banfield mid row
+949	AC2_D3_18O-7	4th floor Banfield mid row
+3959	AA9_D3_18O-7	
+971	HC2_D1_18O-7	4th floor Banfield mid row
+931	AA2_D1_18O-7	4th floor Banfield mid row
+Group 41
+3656	HC8_D5_18O-7	
+3644	HA8_D3_18O-7	
+2395	AC5_D3_18O-7	4th floor Firestone 4th row
+977	HC2_D5_18O-7	4th floor Banfield mid row
+957	HA2_D3_18O-7	4th floor Banfield mid row
+1791	HB4_D5_18O-7	4th floor Banfield mid row
+Group 42
+1792	HC4_D1_18O-7	4th floor Banfield mid row
+2036	AB4_D3_18O-7	4th floor Banfield mid row
+2390	AB5_D3_18O-7	4th floor Firestone 4th row
+3200	AB7_D3_18O-7	4th floor Firestone 1st row
+965	HB2_D3_18O-7	4th floor Banfield mid row
+2029	AA4_D1_18O-7	4th floor Banfield mid row
+Group 43
+4002	HA9_D1_18O-7	
+2446	HA5_D1_18O-7	4th floor Firestone 4th row
+4009	HB9_D3_18O-7	
+2041	AC4_D3_18O-7	4th floor Banfield mid row
+1796	HC4_D5_18O-7	4th floor Banfield mid row
+1425	AA3_D3_18O-7	4th floor Banfield mid row
+Group 44
+3647	HB8_D1_18O-7	
+2450	HA5_D5_18O-7	4th floor Firestone 4th row
+1437	AB3_D5_18O-7	4th floor Banfield mid row
+2458	HC5_D3_18O-7	4th floor Firestone 4th row
+1455	HB3_D1_18O-7	4th floor Banfield mid row
+937	AA2_D5_18O-7	4th floor Banfield mid row
+Group 45
+4011	HB9_D5_18O-7	
+1423	AA3_D1_18O-7	4th floor Banfield mid row
+2456	HC5_D1_18O-7	4th floor Firestone 4th row
+2385	AA5_D3_18O-7	4th floor Firestone 4th row
+3646	HA8_D5_18O-7	
+4014	HC9_D3_18O-7	
+Group 46
+3198	AB7_D1_18O-7	4th floor Firestone 1st row
+1463	HC3_D1_18O-7	4th floor Banfield mid row
+4006	HA9_D5_18O-7	
+1429	AA3_D5_18O-7	4th floor Banfield mid row
+2392	AB5_D5_18O-7	4th floor Firestone 4th row
+1465	HC3_D3_18O-7	4th floor Banfield mid row
+Group 47
+1445	AC3_D5_18O-7	4th floor Banfield mid row
+3966	AB9_D5_18O-7	
+3193	AA7_D1_18O-7	4th floor Firestone 1st row
+2453	HB5_D3_18O-7	4th floor Firestone 4th row
+1794	HC4_D3_18O-7	4th floor Banfield mid row
+2034	AB4_D1_18O-7	4th floor Banfield mid row
+Group 48
+939	AB2_D1_18O-7	4th floor Banfield mid row
+3197	AA7_D5_18O-7	4th floor Firestone 1st row
+2031	AA4_D3_18O-7	4th floor Banfield mid row
+3205	AC7_D3_18O-7	4th floor Firestone 1st row
+2460	HC5_D5_18O-7	4th floor Firestone 4th row
+1431	AB3_D1_18O-7	4th floor Banfield mid row
+Group 49
+973	HC2_D3_18O-7	4th floor Banfield mid row
+933	AA2_D3_18O-7	4th floor Banfield mid row
+1784	HA4_D3_18O-7	4th floor Banfield mid row
+2393	AC5_D1_18O-7	4th floor Firestone 4th row
+1786	HA4_D5_18O-7	4th floor Banfield mid row
+1869	HA4_D1_18O-7	4th floor Banfield mid row
+Group 50
+1449	HA3_D3_18O-7	4th floor Banfield mid row
+1789	HB4_D3_18O-7	4th floor Banfield mid row
+2397	AC5_D5_18O-7	4th floor Firestone 4th row
+4007	HB9_D1_18O-7	
+3195	AA7_D3_18O-7	4th floor Firestone 1st row
+3203	AC7_D1_18O-7	4th floor Firestone 1st row
+Group 51
+953	AC2_D5_18O-7	4th floor Banfield mid row
+3971	AC9_D5_18O-7	
+3651	HB8_D5_18O-7	
+1787	HB4_D1_18O-7	4th floor Banfield mid row
+4004	HA9_D3_18O-7	
+955	HA2_D1_18O-7	4th floor Banfield mid row
+Group 52
+3207	AC7_D5_18O-7	4th floor Firestone 1st row
+3642	HA8_D1_18O-7	
+1439	AC3_D1_18O-7	4th floor Banfield mid row
+3962	AB9_D1_18O-7	
+1441	AC3_D3_18O-7	4th floor Banfield mid row
+4012	HC9_D1_18O-7	
+Total 16O extractions: 210. Total 16O groups: 35
+Total 18O extractions: 102. Total 18O groups: 17
