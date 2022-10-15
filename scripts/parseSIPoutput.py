@@ -5,38 +5,10 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass
 
-data = pd.read_excel('data/220817_Batch_122_Water_Yr_Summary_orig.xlsx', 'Summary')
+from batch_125 import dbID_to_namedID, isotopePairs
 
-dbID_to_namedID = {2018: 'AA4_D5_16O-7',
-                   2023: 'AB4_D5_16O-7',
-                   2028: 'AC4_D5_16O-7',
-                   2046: 'AA4_D5_16O-30',
-                   2049: 'AB4_D5_16O-30',
-                   2052: 'AC4_D5_16O-30',
-                   2033: 'AA4_D5_18O-7',
-                   2038: 'AB4_D5_18O-7',
-                   2043: 'AC4_D5_18O-7',
-                   2055: 'AA4_D5_18O-30',
-                   2058: 'AB4_D5_18O-30',
-                   2061: 'AC4_D5_18O-30'
-                   }
-
-isotopePairs = [(2018, 2033),
-                (2023, 2038),
-                (2028, 2043),
-                (2046, 2055),
-                (2049, 2058),
-                (2052, 2061)]
-
-density1 = data['Unnamed: 2']
-density2 = data['Unnamed: 5']
-density3 = data['Unnamed: 8']
-density4 = data['Unnamed: 11']
-
-concentration1 = data['Unnamed: 3']
-concentration2 = data['Unnamed: 6']
-concentration3 = data['Unnamed: 9']
-concentration4 = data['Unnamed: 12']
+excel_location = 'data/220908_Batch_125_Water_Yr_Summary.xlsx'
+data = pd.read_excel(excel_location, 'Summary')
 
 @dataclass
 class Sample:
@@ -59,23 +31,13 @@ class Sample:
             raise ValueError("Parameter concentration must be a list!")
         self.area = [a*b for a,b in zip(self.density,self.concentration)]
         self.weighted_mean_density = sum(self.area)/sum(self.concentration)
-        self.remainingDNAperFraction = [((abs(x)+x)/2)*37 for x in self.concentration]
+        self.remainingDNAperFraction = [((abs(x)+x)/2)*35 for x in self.concentration]
 
 samples = list()
-samples.append(Sample(2018, dbID_to_namedID[2018], list(data[2018][3:22]), list(density1[3:22]), list(concentration1[3:22])))
-samples.append(Sample(2023, dbID_to_namedID[2023], list(data[2023][3:22]), list(density2[3:22]), list(concentration2[3:22])))
-samples.append(Sample(2028, dbID_to_namedID[2028], list(data[2028][3:22]), list(density3[3:22]), list(concentration3[3:22])))
-samples.append(Sample(2046, dbID_to_namedID[2046], list(data[2046][3:22]), list(density4[3:22]), list(concentration4[3:22])))
 
-samples.append(Sample(2049, dbID_to_namedID[2049], list(data[2018][31:50]), list(density1[31:50]), list(concentration1[31:50])))
-samples.append(Sample(2052, dbID_to_namedID[2052], list(data[2023][31:50]), list(density2[31:50]), list(concentration2[31:50])))
-samples.append(Sample(2033, dbID_to_namedID[2033], list(data[2028][31:50]), list(density3[31:50]), list(concentration3[31:50])))
-samples.append(Sample(2038, dbID_to_namedID[2038], list(data[2046][31:50]), list(density4[31:50]), list(concentration4[31:50])))
+for dbID, name in dbID_to_namedID.items():
+    samples.append(Sample(dbID, name, list(data[dbID][3:22]), list(data[f'{dbID}-density'][3:22]), list(data[f'{dbID}-conc'][3:22])))
 
-samples.append(Sample(2043, dbID_to_namedID[2043], list(data[2018][58:77]), list(density1[58:77]), list(concentration1[58:77])))
-samples.append(Sample(2055, dbID_to_namedID[2055], list(data[2023][58:77]), list(density2[58:77]), list(concentration2[58:77])))
-samples.append(Sample(2058, dbID_to_namedID[2058], list(data[2028][58:77]), list(density3[58:77]), list(concentration3[58:77])))
-samples.append(Sample(2061, dbID_to_namedID[2061], list(data[2046][58:77]), list(density4[58:77]), list(concentration4[58:77])))
 
 def calcAtomPCT(wm16, isotopeShift):
     gcContent = (wm16-1.66)/0.098
@@ -142,6 +104,7 @@ def splitsum(L,S):
         r.append(v)
     return result
 
+#Change to 100ng
 def splitFractions(sampleList, targetDNA=120):
     for sample in sampleList:
         heavy_chunk = splitsum(sample.remainingDNAperFraction, targetDNA)[0]
@@ -189,7 +152,7 @@ def improve_SIP_bins(sampleList, passThrough=0):
         improve_SIP_bins(sampleList, passThrough=passThrough+1)
 
 #Binning first pass
-samples = splitFractions(samples, targetDNA=120)
+samples = splitFractions(samples, targetDNA=100)
 iso18Osamples = list()
 for sample in samples:
     if '_18O-' in sample.name:
@@ -209,7 +172,8 @@ for sample in iso18Osamples:
     # print(f'{sample.name} \t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
 
     print(f'{sample.name} \t','\t'.join(['-'.join(x) for x in sample.chunked_wells]))
-    print(f'{sample.name} \t','\t'.join([f'{np.average(x):.3f} {np.std(x):.3f}' for x in sample.chunked_densities]))
+    #print(f'{sample.name} \t','\t'.join([f'{np.average(x):.3f} {np.std(x):.3f}' for x in sample.chunked_densities]))
+    print(f'{sample.name} \t','\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
     print(f'{sample.name} \t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
 
 #Plotting
@@ -229,8 +193,8 @@ for num,iPair in enumerate(isotopePairs):
         incubation = 30
     plotGraph(iso18O, 
               axs[row,col], 
-              f'{iso16O.name[:6]} days: {incubation}  at% enrichment: {atomPCTenrichment:.2f}%',)
-              #sample16=iso16O)
+              f'{iso16O.name[:6]} days: {incubation}  at% enrichment: {atomPCTenrichment:.2f}%',
+              sample16=iso16O)
 
 for ax in axs.flat:
     ax.set_xlim(1.6, 1.8)
@@ -240,4 +204,4 @@ for ax in axs.flat:
     ax.label_outer()
 
 plt.plot()
-plt.savefig('figures/A4_D5_7-30_18Obins.svg', dpi=300)
+plt.savefig('figures/H3_D5_7-30_18O.svg', dpi=300)
