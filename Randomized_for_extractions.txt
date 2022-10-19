@@ -1,369 +1,369 @@
 16O groups:
-Group 1
-1472	AA3_D1_16O-7	4th floor Banfield mid row
-1009	AC2_D3_16O-0	4th floor Firestone 4th row 2nd rack
-3941	AC9_D5_16O-0	4th floor Firestone 4th row 2nd rack
-3984	HC9_D3_16O-0	4th floor Firestone 4th row 2nd rack
-1029	HA2_D5_16O-7	4th floor Banfield mid row
-3632	HB8_D1_16O-7	4th floor Firestone 4th row 2nd rack
-Group 2
-1006	AC2_D1_16O-7	4th floor Banfield mid row
-2435	HA5_D5_16O-7	4th floor Firestone 4th row 3rd rack
-3626	HC8_D5_16O-0	4th floor Firestone 2nd row 1st rack
-3185	AB7_D3_16O-7	4th floor Firestone 4th row 2nd rack
-2011	AC4_D3_16O-0	4th floor Firestone 4th row 2nd rack
-3932	AB9_D1_16O-0	4th floor Firestone 4th row 2nd rack
-Group 3
-1032	HB2_D1_16O-7	4th floor Banfield mid row
-3188	AC7_D1_16O-7	4th floor Firestone 4th row 2nd rack
-1494	AB3_D5_16O-0	4th floor Firestone 4th row 3rd rack
-1775	HB4_D3_16O-7	4th floor Firestone 4th row 3rd rack
-1471	AA3_D1_16O-0	4th floor Firestone 4th row 3rd rack
-3627	HA8_D1_16O-7	4th floor Firestone 4th row 2nd rack
-Group 4
-3974	HA9_D3_16O-0	4th floor Firestone 4th row 2nd rack
-1782	HC4_D5_16O-7	4th floor Firestone 4th row 3rd rack
-3192	AC7_D5_16O-7	4th floor Firestone 4th row 2nd rack
-1501	AC3_D3_16O-0	4th floor Firestone 4th row 3rd rack
-2418	HA5_D3_16O-0	4th floor Firestone 4th row 3rd rack
-3946	AA9_D5_16O-7	4th floor Firestone 4th row 2nd rack
-Group 5
-1755	HA4_D3_16O-0	4th floor Banfield mid row
-1035	HB2_D3_16O-0	4th floor Firestone 4th row 2nd rack
-2382	AC5_D5_16O-7	4th floor Banfield mid row
-1005	AC2_D1_16O-0	4th floor Firestone 4th row 2nd rack
-1514	HA3_D3_16O-0	4th floor Firestone 4th row 3rd rack
-1763	HC4_D1_16O-0	4th floor Banfield mid row
-Group 6
-2420	HA5_D5_16O-0	4th floor Firestone 4th row 3rd rack
-1780	HC4_D3_16O-7	4th floor Firestone 4th row 3rd rack
-2353	AA5_D1_16O-0	4th floor Firestone 4th row 3rd rack
-3944	AA9_D3_16O-7	4th floor Firestone 4th row 2nd rack
-3977	HB9_D1_16O-0	4th floor Firestone 4th row 2nd rack
-1016	AC2_D5_16O-7	4th floor Banfield mid row
-Group 7
-2001	AA4_D3_16O-0	4th floor Firestone 4th row 2nd rack
-1523	HB3_D1_16O-0	4th floor Firestone 4th row 3rd rack
-1528	HB3_D3_16O-7	4th floor Banfield mid row
-3947	AB9_D1_16O-7	4th floor Firestone 4th row 2nd rack
-3172	AB7_D5_16O-0	4th floor Firestone 4th row 3rd rack
-3939	AC9_D3_16O-0	4th floor Firestone 4th row 2nd rack
-Group 8
-3168	AB7_D1_16O-0	4th floor Firestone 4th row 3rd rack
-2357	AA5_D5_16O-0	4th floor Firestone 4th row 3rd rack
-3989	HA9_D3_16O-7	4th floor Firestone 4th row 2nd rack
-2373	AB5_D1_16O-7	4th floor Banfield mid row
-3937	AC9_D1_16O-0	4th floor Firestone 4th row 2nd rack
-1044	HC2_D1_16O-0	4th floor Firestone 4th row 2nd rack
-Group 9
-3972	HA9_D1_16O-0	4th floor Firestone 4th row 2nd rack
-3622	HC8_D1_16O-0	4th floor Firestone 2nd row 1st rack
-3163	AA7_D1_16O-0	4th floor Firestone 4th row 3rd rack
-1762	HB4_D5_16O-0	4th floor Banfield mid row
-1502	AC3_D3_16O-7	4th floor Banfield mid row
-2426	HC5_D1_16O-0	4th floor Firestone 4th row 3rd rack
-Group 10
-2006	AB4_D3_16O-0	4th floor Firestone 4th row 2nd rack
-1753	HA4_D1_16O-0	4th floor Banfield mid row
-979	AA2_D1_16O-0	4th floor Firestone 4th row 2nd rack
-3979	HB9_D3_16O-0	4th floor Firestone 4th row 2nd rack
-1511	HA3_D1_16O-7	4th floor Banfield mid row
-3982	HC9_D1_16O-0	4th floor Firestone 4th row 2nd rack
-Group 11
-4001	HC9_D5_16O-7	4th floor Firestone 4th row 2nd rack
-3183	AB7_D1_16O-7	4th floor Firestone 4th row 2nd rack
-1778	HC4_D1_16O-7	4th floor Firestone 4th row 3rd rack
-1023	HA2_D3_16O-7	4th floor Banfield mid row
-2440	HB5_D5_16O-7	4th floor Firestone 4th row 3rd rack
-1520	HA3_D5_16O-0	4th floor Firestone 4th row 3rd rack
-Group 12
-3624	HC8_D3_16O-0	4th floor Firestone 2nd row 1st rack
-1010	AC2_D3_16O-7	4th floor Banfield mid row
-3170	AB7_D3_16O-0	4th floor Firestone 4th row 3rd rack
-1028	HA2_D5_16O-0	4th floor Firestone 4th row 2nd rack
-1540	HC3_D3_16O-0	4th floor Firestone 4th row 3rd rack
-1770	HA4_D3_16O-7	4th floor Firestone 4th row 3rd rack
-Group 13
-1031	HB2_D1_16O-0	4th floor Firestone 4th row 2nd rack
-1041	HB2_D5_16O-0	4th floor Firestone 4th row 2nd rack
-3619	HB8_D3_16O-0	4th floor Firestone 2nd row 1st rack
-2013	AC4_D5_16O-0	4th floor Firestone 4th row 2nd rack
-2019	AB4_D1_16O-7	4th floor Banfield mid row
-1475	AA3_D3_16O-0	4th floor Firestone 4th row 3rd rack
-Group 14
-3976	HA9_D5_16O-0	4th floor Firestone 4th row 2nd rack
-3629	HA8_D3_16O-7	4th floor Firestone 4th row 2nd rack
-1015	AC2_D5_16O-0	4th floor Firestone 4th row 2nd rack
-2416	HA5_D1_16O-0	4th floor Firestone 4th row 3rd rack
-2368	AA5_D1_16O-7	4th floor Banfield mid row
-2375	AB5_D3_16O-7	4th floor Banfield mid row
-Group 15
-3167	AA7_D5_16O-0	4th floor Firestone 4th row 3rd rack
-1772	HA4_D5_16O-7	4th floor Firestone 4th row 3rd rack
-3637	HC8_D1_16O-7	4th floor Firestone 4th row 2nd rack
-2009	AC4_D1_16O-0	4th floor Firestone 4th row 2nd rack
-2445	HC5_D5_16O-7	4th floor Firestone 4th row 3rd rack
-3931	AA9_D5_16O-0	4th floor Firestone 4th row 2nd rack
-Group 16
-1498	AC3_D1_16O-7	4th floor Banfield mid row
-3641	HC8_D5_16O-7	4th floor Firestone 4th row 2nd rack
-1524	HB3_D1_16O-7	4th floor Banfield mid row
-980	AA2_D1_16O-7	4th floor Banfield mid row
-3182	AA7_D5_16O-7	4th floor Firestone 4th row 2nd rack
-3952	AC9_D1_16O-7	4th floor Firestone 4th row 2nd rack
-Group 17
-3956	AC9_D5_16O-7	4th floor Firestone 4th row 2nd rack
-3634	HB8_D3_16O-7	4th floor Firestone 4th row 2nd rack
-1767	HC4_D5_16O-0	4th floor Banfield mid row
-3929	AA9_D3_16O-0	4th floor Firestone 4th row 2nd rack
-1488	AB3_D3_16O-0	4th floor Firestone 4th row 3rd rack
-2377	AB5_D5_16O-7	4th floor Banfield mid row
-Group 18
-1541	HC3_D3_16O-7	4th floor Banfield mid row
-3639	HC8_D3_16O-7	4th floor Firestone 4th row 2nd rack
-1758	HB4_D1_16O-0	4th floor Banfield mid row
-3951	AB9_D5_16O-7	4th floor Firestone 4th row 2nd rack
-2016	AA4_D3_16O-7	4th floor Banfield mid row
-2004	AB4_D1_16O-0	4th floor Firestone 4th row 2nd rack
-Group 19
-3190	AC7_D3_16O-7	4th floor Firestone 4th row 2nd rack
-1055	HC2_D5_16O-7	4th floor Banfield mid row
-2362	AB5_D5_16O-0	4th floor Firestone 4th row 3rd rack
-1003	AB2_D5_16O-7	4th floor Banfield mid row
-2008	AB4_D5_16O-0	4th floor Firestone 4th row 2nd rack
-3954	AC9_D3_16O-7	4th floor Firestone 4th row 2nd rack
-Group 20
-1533	HB3_D5_16O-0	4th floor Firestone 4th row 3rd rack
-1019	HA2_D1_16O-7	4th floor Banfield mid row
-1777	HB4_D5_16O-7	4th floor Firestone 4th row 3rd rack
-3987	HA9_D1_16O-7	4th floor Firestone 4th row 2nd rack
-2438	HB5_D3_16O-7	4th floor Firestone 4th row 3rd rack
-3999	HC9_D3_16O-7	4th floor Firestone 4th row 2nd rack
-Group 21
-990	AA2_D5_16O-7	4th floor Banfield mid row
-3934	AB9_D3_16O-0	4th floor Firestone 4th row 2nd rack
-1510	HA3_D1_16O-0	4th floor Firestone 4th row 3rd rack
-3981	HB9_D5_16O-0	4th floor Firestone 4th row 2nd rack
-3631	HA8_D5_16O-7	4th floor Firestone 4th row 2nd rack
-1484	AB3_D1_16O-0	4th floor Firestone 4th row 3rd rack
-Group 22
-1508	AC3_D5_16O-7	4th floor Banfield mid row
-3986	HC9_D5_16O-0	4th floor Firestone 4th row 2nd rack
-1045	HC2_D1_16O-7	4th floor Banfield mid row
-2355	AA5_D3_16O-0	4th floor Firestone 4th row 3rd rack
-1485	AB3_D1_16O-7	4th floor Banfield mid row
-1036	HB2_D3_16O-7	4th floor Banfield mid row
-Group 23
-1999	AA4_D1_16O-0	4th floor Firestone 4th row 2nd rack
-1773	HB4_D1_16O-7	4th floor Firestone 4th row 3rd rack
-2360	AB5_D3_16O-0	4th floor Firestone 4th row 3rd rack
-2425	HB5_D5_16O-0	4th floor Firestone 4th row 3rd rack
-3621	HB8_D5_16O-0	4th floor Firestone 2nd row 1st rack
-1022	HA2_D3_16O-0	4th floor Firestone 4th row 2nd rack
-Group 24
-1048	HC2_D3_16O-0	4th floor Firestone 4th row 2nd rack
-2378	AC5_D1_16O-7	4th floor Banfield mid row
-2433	HA5_D3_16O-7	4th floor Firestone 4th row 3rd rack
-984	AA2_D3_16O-7	4th floor Banfield mid row
-1515	HA3_D3_16O-7	4th floor Banfield mid row
-2441	HC5_D1_16O-7	4th floor Firestone 4th row 3rd rack
-Group 25
-1482	AA3_D5_16O-7	4th floor Banfield mid row
-2026	AC4_D3_16O-7	4th floor Banfield mid row
-992	AB2_D1_16O-0	4th floor Firestone 4th row 2nd rack
-3612	HA8_D1_16O-0	4th floor Firestone 2nd row 1st rack
-3994	HB9_D3_16O-7	4th floor Firestone 4th row 2nd rack
-1757	HA4_D5_16O-0	4th floor Banfield mid row
-Group 26
-2430	HC5_D5_16O-0	4th floor Firestone 4th row 3rd rack
-1497	AC3_D1_16O-0	4th floor Firestone 4th row 3rd rack
-2421	HB5_D1_16O-0	4th floor Firestone 4th row 3rd rack
-997	AB2_D3_16O-7	4th floor Banfield mid row
-2372	AA5_D5_16O-7	4th floor Banfield mid row
-3180	AA7_D3_16O-7	4th floor Firestone 4th row 2nd rack
-Group 27
-2436	HB5_D1_16O-7	4th floor Firestone 4th row 3rd rack
-1536	HC3_D1_16O-0	4th floor Firestone 4th row 3rd rack
-1018	HA2_D1_16O-0	4th floor Firestone 4th row 2nd rack
-1476	AA3_D3_16O-7	4th floor Banfield mid row
-3942	AA9_D1_16O-7	4th floor Firestone 4th row 2nd rack
-2021	AB4_D3_16O-7	4th floor Banfield mid row
-Group 28
-3991	HA9_D5_16O-7	4th floor Firestone 4th row 2nd rack
-1537	HC3_D1_16O-7	4th floor Banfield mid row
-1760	HB4_D3_16O-0	4th floor Banfield mid row
-2380	AC5_D3_16O-7	4th floor Banfield mid row
-993	AB2_D1_16O-7	4th floor Banfield mid row
-1495	AB3_D5_16O-7	4th floor Banfield mid row
-Group 29
-1507	AC3_D5_16O-0	4th floor Firestone 4th row 3rd rack
-3936	AB9_D5_16O-0	4th floor Firestone 4th row 2nd rack
-3165	AA7_D3_16O-0	4th floor Firestone 4th row 3rd rack
-2358	AB5_D1_16O-0	4th floor Firestone 4th row 3rd rack
-2367	AC5_D5_16O-0	4th floor Firestone 4th row 3rd rack
-1768	HA4_D1_16O-7	4th floor Firestone 4th row 3rd rack
-Group 30
-2443	HC5_D3_16O-7	4th floor Firestone 4th row 3rd rack
-2365	AC5_D3_16O-0	4th floor Firestone 4th row 3rd rack
-1002	AB2_D5_16O-0	4th floor Firestone 4th row 2nd rack
-1489	AB3_D3_16O-7	4th floor Banfield mid row
-1042	HB2_D5_16O-7	4th floor Banfield mid row
-3636	HB8_D5_16O-7	4th floor Firestone 4th row 2nd rack
-Group 31
-3927	AA9_D1_16O-0	4th floor Firestone 4th row 2nd rack
-1765	HC4_D3_16O-0	4th floor Banfield mid row
-3614	HA8_D3_16O-0	4th floor Firestone 2nd row 1st rack
-996	AB2_D3_16O-0	4th floor Firestone 4th row 2nd rack
-3997	HC9_D1_16O-7	4th floor Firestone 4th row 2nd rack
-3175	AC7_D3_16O-0	4th floor Firestone 4th row 3rd rack
-Group 32
-3949	AB9_D3_16O-7	4th floor Firestone 4th row 2nd rack
-3616	HA8_D5_16O-0	4th floor Firestone 2nd row 1st rack
-1481	AA3_D5_16O-0	4th floor Firestone 4th row 3rd rack
-1546	HC3_D5_16O-0	4th floor Firestone 4th row 3rd rack
-3996	HB9_D5_16O-7	4th floor Firestone 4th row 2nd rack
-989	AA2_D5_16O-0	4th floor Firestone 4th row 2nd rack
-Group 33
-1054	HC2_D5_16O-0	4th floor Firestone 4th row 2nd rack
-2024	AC4_D1_16O-7	4th floor Banfield mid row
-1527	HB3_D3_16O-0	4th floor Firestone 4th row 3rd rack
-2003	AA4_D5_16O-0	4th floor Firestone 4th row 2nd rack
-3173	AC7_D1_16O-0	4th floor Firestone 4th row 3rd rack
-983	AA2_D3_16O-0	4th floor Firestone 4th row 2nd rack
-Group 34
-2431	HA5_D1_16O-7	4th floor Firestone 4th row 3rd rack
-3992	HB9_D1_16O-7	4th floor Firestone 4th row 2nd rack
-3177	AC7_D5_16O-0	4th floor Firestone 4th row 3rd rack
-2363	AC5_D1_16O-0	4th floor Firestone 4th row 3rd rack
-3617	HB8_D1_16O-0	4th floor Firestone 2nd row 1st rack
-2428	HC5_D3_16O-0	4th floor Firestone 4th row 3rd rack
-Group 35
-3178	AA7_D1_16O-7	4th floor Firestone 4th row 2nd rack
-2423	HB5_D3_16O-0	4th floor Firestone 4th row 3rd rack
-2014	AA4_D1_16O-7	4th floor Banfield mid row
-3187	AB7_D5_16O-7	4th floor Firestone 4th row 2nd rack
-1049	HC2_D3_16O-7	4th floor Banfield mid row
-2370	AA5_D3_16O-7	4th floor Banfield mid row
+Group a
+a1 3163	AA7_D1_16O-0	4th floor Firestone 4th row 3rd rack
+a2 1527	HB3_D3_16O-0	4th floor Firestone 4th row 3rd rack
+a3 1507	AC3_D5_16O-0	4th floor Firestone 4th row 3rd rack
+a4 3187	AB7_D5_16O-7	4th floor Firestone 4th row 2nd rack
+a5 3974	HA9_D3_16O-0	4th floor Firestone 4th row 2nd rack
+a6 2426	HC5_D1_16O-0	4th floor Firestone 4th row 3rd rack
+Group b
+b1 2438	HB5_D3_16O-7	4th floor Firestone 4th row 3rd rack
+b2 1753	HA4_D1_16O-0	4th floor Banfield mid row
+b3 3178	AA7_D1_16O-7	4th floor Firestone 4th row 2nd rack
+b4 1044	HC2_D1_16O-0	4th floor Firestone 4th row 2nd rack
+b5 2378	AC5_D1_16O-7	4th floor Banfield mid row
+b6 3634	HB8_D3_16O-7	4th floor Firestone 4th row 2nd rack
+Group c
+c1 1476	AA3_D3_16O-7	4th floor Banfield mid row
+c2 1032	HB2_D1_16O-7	4th floor Banfield mid row
+c3 1497	AC3_D1_16O-0	4th floor Firestone 4th row 3rd rack
+c4 3183	AB7_D1_16O-7	4th floor Firestone 4th row 2nd rack
+c5 3989	HA9_D3_16O-7	4th floor Firestone 4th row 2nd rack
+c6 2431	HA5_D1_16O-7	4th floor Firestone 4th row 3rd rack
+Group d
+d1 3168	AB7_D1_16O-0	4th floor Firestone 4th row 3rd rack
+d2 1019	HA2_D1_16O-7	4th floor Banfield mid row
+d3 1780	HC4_D3_16O-7	4th floor Firestone 4th row 3rd rack
+d4 2418	HA5_D3_16O-0	4th floor Firestone 4th row 3rd rack
+d5 1498	AC3_D1_16O-7	4th floor Banfield mid row
+d6 979	AA2_D1_16O-0	4th floor Firestone 4th row 2nd rack
+Group e
+e1 3939	AC9_D3_16O-0	4th floor Firestone 4th row 2nd rack
+e2 3931	AA9_D5_16O-0	4th floor Firestone 4th row 2nd rack
+e3 2360	AB5_D3_16O-0	4th floor Firestone 4th row 3rd rack
+e4 2373	AB5_D1_16O-7	4th floor Banfield mid row
+e5 1494	AB3_D5_16O-0	4th floor Firestone 4th row 3rd rack
+e6 3977	HB9_D1_16O-0	4th floor Firestone 4th row 2nd rack
+Group f
+f1 2382	AC5_D5_16O-7	4th floor Banfield mid row
+f2 2009	AC4_D1_16O-0	4th floor Firestone 4th row 2nd rack
+f3 993	AB2_D1_16O-7	4th floor Banfield mid row
+f4 3981	HB9_D5_16O-0	4th floor Firestone 4th row 2nd rack
+f5 1546	HC3_D5_16O-0	4th floor Firestone 4th row 3rd rack
+f6 2430	HC5_D5_16O-0	4th floor Firestone 4th row 3rd rack
+Group g
+g1 1524	HB3_D1_16O-7	4th floor Banfield mid row
+g2 2021	AB4_D3_16O-7	4th floor Banfield mid row
+g3 3173	AC7_D1_16O-0	4th floor Firestone 4th row 3rd rack
+g4 3934	AB9_D3_16O-0	4th floor Firestone 4th row 2nd rack
+g5 1045	HC2_D1_16O-7	4th floor Banfield mid row
+g6 2368	AA5_D1_16O-7	4th floor Banfield mid row
+Group h
+h1 2363	AC5_D1_16O-0	4th floor Firestone 4th row 3rd rack
+h2 2370	AA5_D3_16O-7	4th floor Banfield mid row
+h3 3951	AB9_D5_16O-7	4th floor Firestone 4th row 2nd rack
+h4 3984	HC9_D3_16O-0	4th floor Firestone 4th row 2nd rack
+h5 1768	HA4_D1_16O-7	4th floor Firestone 4th row 3rd rack
+h6 1762	HB4_D5_16O-0	4th floor Banfield mid row
+Group i
+i1 1782	HC4_D5_16O-7	4th floor Firestone 4th row 3rd rack
+i2 1510	HA3_D1_16O-0	4th floor Firestone 4th row 3rd rack
+i3 1016	AC2_D5_16O-7	4th floor Banfield mid row
+i4 2014	AA4_D1_16O-7	4th floor Banfield mid row
+i5 3929	AA9_D3_16O-0	4th floor Firestone 4th row 2nd rack
+i6 2423	HB5_D3_16O-0	4th floor Firestone 4th row 3rd rack
+Group j
+j1 1485	AB3_D1_16O-7	4th floor Banfield mid row
+j2 1540	HC3_D3_16O-0	4th floor Firestone 4th row 3rd rack
+j3 1758	HB4_D1_16O-0	4th floor Banfield mid row
+j4 2367	AC5_D5_16O-0	4th floor Firestone 4th row 3rd rack
+j5 1035	HB2_D3_16O-0	4th floor Firestone 4th row 2nd rack
+j6 1481	AA3_D5_16O-0	4th floor Firestone 4th row 3rd rack
+Group k
+k1 1999	AA4_D1_16O-0	4th floor Firestone 4th row 2nd rack
+k2 3167	AA7_D5_16O-0	4th floor Firestone 4th row 3rd rack
+k3 1757	HA4_D5_16O-0	4th floor Banfield mid row
+k4 2365	AC5_D3_16O-0	4th floor Firestone 4th row 3rd rack
+k5 1475	AA3_D3_16O-0	4th floor Firestone 4th row 3rd rack
+k6 3987	HA9_D1_16O-7	4th floor Firestone 4th row 2nd rack
+Group l
+l1 3614	HA8_D3_16O-0	4th floor Firestone 4th row 2nd rack
+l2 3172	AB7_D5_16O-0	4th floor Firestone 4th row 3rd rack
+l3 1003	AB2_D5_16O-7	4th floor Banfield mid row
+l4 996	AB2_D3_16O-0	4th floor Firestone 4th row 2nd rack
+l5 3626	HC8_D5_16O-0	4th floor Firestone 4th row 2nd rack
+l6 1054	HC2_D5_16O-0	4th floor Firestone 4th row 2nd rack
+Group m
+m1 1009	AC2_D3_16O-0	4th floor Firestone 4th row 2nd rack
+m2 2420	HA5_D5_16O-0	4th floor Firestone 4th row 3rd rack
+m3 1501	AC3_D3_16O-0	4th floor Firestone 4th row 3rd rack
+m4 2013	AC4_D5_16O-0	4th floor Firestone 4th row 2nd rack
+m5 2004	AB4_D1_16O-0	4th floor Firestone 4th row 2nd rack
+m6 3637	HC8_D1_16O-7	4th floor Firestone 4th row 2nd rack
+Group n
+n1 3185	AB7_D3_16O-7	4th floor Firestone 4th row 2nd rack
+n2 1471	AA3_D1_16O-0	4th floor Firestone 4th row 3rd rack
+n3 1520	HA3_D5_16O-0	4th floor Firestone 4th row 3rd rack
+n4 3632	HB8_D1_16O-7	4th floor Firestone 4th row 2nd rack
+n5 2016	AA4_D3_16O-7	4th floor Banfield mid row
+n6 2357	AA5_D5_16O-0	4th floor Firestone 4th row 3rd rack
+Group o
+o1 3991	HA9_D5_16O-7	4th floor Firestone 4th row 2nd rack
+o2 1528	HB3_D3_16O-7	4th floor Banfield mid row
+o3 1773	HB4_D1_16O-7	4th floor Firestone 4th row 3rd rack
+o4 1488	AB3_D3_16O-0	4th floor Firestone 4th row 3rd rack
+o5 1031	HB2_D1_16O-0	4th floor Firestone 4th row 2nd rack
+o6 1533	HB3_D5_16O-0	4th floor Firestone 4th row 3rd rack
+Group p
+p1 1765	HC4_D3_16O-0	4th floor Banfield mid row
+p2 3947	AB9_D1_16O-7	4th floor Firestone 4th row 2nd rack
+p3 3636	HB8_D5_16O-7	4th floor Firestone 4th row 2nd rack
+p4 3994	HB9_D3_16O-7	4th floor Firestone 4th row 2nd rack
+p5 3182	AA7_D5_16O-7	4th floor Firestone 4th row 2nd rack
+p6 1537	HC3_D1_16O-7	4th floor Banfield mid row
+Group q
+q1 3944	AA9_D3_16O-7	4th floor Firestone 4th row 2nd rack
+q2 1495	AB3_D5_16O-7	4th floor Banfield mid row
+q3 2358	AB5_D1_16O-0	4th floor Firestone 4th row 3rd rack
+q4 1041	HB2_D5_16O-0	4th floor Firestone 4th row 2nd rack
+q5 1036	HB2_D3_16O-7	4th floor Banfield mid row
+q6 3927	AA9_D1_16O-0	4th floor Firestone 4th row 2nd rack
+Group r
+r1 2375	AB5_D3_16O-7	4th floor Banfield mid row
+r2 2372	AA5_D5_16O-7	4th floor Banfield mid row
+r3 1775	HB4_D3_16O-7	4th floor Firestone 4th row 3rd rack
+r4 3165	AA7_D3_16O-0	4th floor Firestone 4th row 3rd rack
+r5 1777	HB4_D5_16O-7	4th floor Firestone 4th row 3rd rack
+r6 1010	AC2_D3_16O-7	4th floor Banfield mid row
+Group s
+s1 2003	AA4_D5_16O-0	4th floor Firestone 4th row 2nd rack
+s2 3942	AA9_D1_16O-7	4th floor Firestone 4th row 2nd rack
+s3 1763	HC4_D1_16O-0	4th floor Banfield mid row
+s4 3936	AB9_D5_16O-0	4th floor Firestone 4th row 2nd rack
+s5 3972	HA9_D1_16O-0	4th floor Firestone 4th row 2nd rack
+s6 992	AB2_D1_16O-0	4th floor Firestone 4th row 2nd rack
+Group t
+t1 1772	HA4_D5_16O-7	4th floor Firestone 4th row 3rd rack
+t2 3619	HB8_D3_16O-0	4th floor Firestone 4th row 2nd rack
+t3 989	AA2_D5_16O-0	4th floor Firestone 4th row 2nd rack
+t4 1049	HC2_D3_16O-7	4th floor Banfield mid row
+t5 3622	HC8_D1_16O-0	4th floor Firestone 4th row 2nd rack
+t6 2019	AB4_D1_16O-7	4th floor Banfield mid row
+Group u
+u1 2006	AB4_D3_16O-0	4th floor Firestone 4th row 2nd rack
+u2 1514	HA3_D3_16O-0	4th floor Firestone 4th row 3rd rack
+u3 1028	HA2_D5_16O-0	4th floor Firestone 4th row 2nd rack
+u4 3188	AC7_D1_16O-7	4th floor Firestone 4th row 2nd rack
+u5 2024	AC4_D1_16O-7	4th floor Banfield mid row
+u6 990	AA2_D5_16O-7	4th floor Banfield mid row
+Group v
+v1 2026	AC4_D3_16O-7	4th floor Banfield mid row
+v2 1022	HA2_D3_16O-0	4th floor Firestone 4th row 2nd rack
+v3 1755	HA4_D3_16O-0	4th floor Banfield mid row
+v4 1042	HB2_D5_16O-7	4th floor Banfield mid row
+v5 3639	HC8_D3_16O-7	4th floor Firestone 4th row 2nd rack
+v6 2362	AB5_D5_16O-0	4th floor Firestone 4th row 3rd rack
+Group w
+w1 3996	HB9_D5_16O-7	4th floor Firestone 4th row 2nd rack
+w2 1502	AC3_D3_16O-7	4th floor Banfield mid row
+w3 3629	HA8_D3_16O-7	4th floor Firestone 4th row 2nd rack
+w4 2428	HC5_D3_16O-0	4th floor Firestone 4th row 3rd rack
+w5 3190	AC7_D3_16O-7	4th floor Firestone 4th row 2nd rack
+w6 1029	HA2_D5_16O-7	4th floor Banfield mid row
+Group x
+x1 1770	HA4_D3_16O-7	4th floor Firestone 4th row 3rd rack
+x2 2445	HC5_D5_16O-7	4th floor Firestone 4th row 3rd rack
+x3 3612	HA8_D1_16O-0	4th floor Firestone 4th row 2nd rack
+x4 1536	HC3_D1_16O-0	4th floor Firestone 4th row 3rd rack
+x5 3979	HB9_D3_16O-0	4th floor Firestone 4th row 2nd rack
+x6 1002	AB2_D5_16O-0	4th floor Firestone 4th row 2nd rack
+Group y
+y1 3946	AA9_D5_16O-7	4th floor Firestone 4th row 2nd rack
+y2 2441	HC5_D1_16O-7	4th floor Firestone 4th row 3rd rack
+y3 2353	AA5_D1_16O-0	4th floor Firestone 4th row 3rd rack
+y4 1018	HA2_D1_16O-0	4th floor Firestone 4th row 2nd rack
+y5 1484	AB3_D1_16O-0	4th floor Firestone 4th row 3rd rack
+y6 2425	HB5_D5_16O-0	4th floor Firestone 4th row 3rd rack
+Group z
+z1 1523	HB3_D1_16O-0	4th floor Firestone 4th row 3rd rack
+z2 1005	AC2_D1_16O-0	4th floor Firestone 4th row 2nd rack
+z3 3192	AC7_D5_16O-7	4th floor Firestone 4th row 2nd rack
+z4 2355	AA5_D3_16O-0	4th floor Firestone 4th row 3rd rack
+z5 1489	AB3_D3_16O-7	4th floor Banfield mid row
+z6 1482	AA3_D5_16O-7	4th floor Banfield mid row
+Group A
+A1 1541	HC3_D3_16O-7	4th floor Banfield mid row
+A2 4001	HC9_D5_16O-7	4th floor Firestone 4th row 2nd rack
+A3 3170	AB7_D3_16O-0	4th floor Firestone 4th row 3rd rack
+A4 1767	HC4_D5_16O-0	4th floor Banfield mid row
+A5 2377	AB5_D5_16O-7	4th floor Banfield mid row
+A6 3621	HB8_D5_16O-0	4th floor Firestone 4th row 2nd rack
+Group B
+B1 1515	HA3_D3_16O-7	4th floor Banfield mid row
+B2 2008	AB4_D5_16O-0	4th floor Firestone 4th row 2nd rack
+B3 2435	HA5_D5_16O-7	4th floor Firestone 4th row 3rd rack
+B4 2436	HB5_D1_16O-7	4th floor Firestone 4th row 3rd rack
+B5 3952	AC9_D1_16O-7	4th floor Firestone 4th row 2nd rack
+B6 984	AA2_D3_16O-7	4th floor Banfield mid row
+Group C
+C1 3949	AB9_D3_16O-7	4th floor Firestone 4th row 2nd rack
+C2 1015	AC2_D5_16O-0	4th floor Firestone 4th row 2nd rack
+C3 1023	HA2_D3_16O-7	4th floor Banfield mid row
+C4 1508	AC3_D5_16O-7	4th floor Banfield mid row
+C5 983	AA2_D3_16O-0	4th floor Firestone 4th row 2nd rack
+C6 2011	AC4_D3_16O-0	4th floor Firestone 4th row 2nd rack
+Group D
+D1 3976	HA9_D5_16O-0	4th floor Firestone 4th row 2nd rack
+D2 3177	AC7_D5_16O-0	4th floor Firestone 4th row 3rd rack
+D3 980	AA2_D1_16O-7	4th floor Banfield mid row
+D4 1760	HB4_D3_16O-0	4th floor Banfield mid row
+D5 3999	HC9_D3_16O-7	4th floor Firestone 4th row 2nd rack
+D6 2416	HA5_D1_16O-0	4th floor Firestone 4th row 3rd rack
+Group E
+E1 1778	HC4_D1_16O-7	4th floor Firestone 4th row 3rd rack
+E2 3624	HC8_D3_16O-0	4th floor Firestone 4th row 2nd rack
+E3 997	AB2_D3_16O-7	4th floor Banfield mid row
+E4 2421	HB5_D1_16O-0	4th floor Firestone 4th row 3rd rack
+E5 3941	AC9_D5_16O-0	4th floor Firestone 4th row 2nd rack
+E6 3616	HA8_D5_16O-0	4th floor Firestone 4th row 2nd rack
+Group F
+F1 2440	HB5_D5_16O-7	4th floor Firestone 4th row 3rd rack
+F2 3617	HB8_D1_16O-0	4th floor Firestone 4th row 2nd rack
+F3 2443	HC5_D3_16O-7	4th floor Firestone 4th row 3rd rack
+F4 3986	HC9_D5_16O-0	4th floor Firestone 4th row 2nd rack
+F5 3180	AA7_D3_16O-7	4th floor Firestone 4th row 2nd rack
+F6 3997	HC9_D1_16O-7	4th floor Firestone 4th row 2nd rack
+Group G
+G1 1472	AA3_D1_16O-7	4th floor Banfield mid row
+G2 3932	AB9_D1_16O-0	4th floor Firestone 4th row 2nd rack
+G3 3982	HC9_D1_16O-0	4th floor Firestone 4th row 2nd rack
+G4 2380	AC5_D3_16O-7	4th floor Banfield mid row
+G5 1006	AC2_D1_16O-7	4th floor Banfield mid row
+G6 3175	AC7_D3_16O-0	4th floor Firestone 4th row 3rd rack
+Group H
+H1 3631	HA8_D5_16O-7	4th floor Firestone 4th row 2nd rack
+H2 2433	HA5_D3_16O-7	4th floor Firestone 4th row 3rd rack
+H3 3956	AC9_D5_16O-7	4th floor Firestone 4th row 2nd rack
+H4 3937	AC9_D1_16O-0	4th floor Firestone 4th row 2nd rack
+H5 3954	AC9_D3_16O-7	4th floor Firestone 4th row 2nd rack
+H6 1511	HA3_D1_16O-7	4th floor Banfield mid row
+Group I
+I1 3627	HA8_D1_16O-7	4th floor Firestone 4th row 2nd rack
+I2 3992	HB9_D1_16O-7	4th floor Firestone 4th row 2nd rack
+I3 1055	HC2_D5_16O-7	4th floor Banfield mid row
+I4 3641	HC8_D5_16O-7	4th floor Firestone 4th row 2nd rack
+I5 2001	AA4_D3_16O-0	4th floor Firestone 4th row 2nd rack
+I6 1048	HC2_D3_16O-0	4th floor Firestone 4th row 2nd rack
 
 18O groups:
-Group 36
-2455	HB5_D5_18O-7	4th floor Firestone 4th row 3rd rack
-969	HB2_D5_18O-7	4th floor Banfield mid row
-3969	AC9_D3_18O-7	4th floor Firestone 4th row 2nd rack
-1457	HB3_D3_18O-7	4th floor Banfield mid row
-963	HB2_D1_18O-7	4th floor Banfield mid row
-3652	HC8_D1_18O-7	4th floor Firestone 4th row 2nd rack
-Group 37
-3649	HB8_D3_18O-7	4th floor Firestone 4th row 2nd rack
-2451	HB5_D1_18O-7	4th floor Firestone 4th row 3rd rack
-1447	HA3_D1_18O-7	4th floor Banfield mid row
-2387	AA5_D5_18O-7	4th floor Firestone 4th row 3rd rack
-2039	AC4_D1_18O-7	4th floor Banfield mid row
-3967	AC9_D1_18O-7	4th floor Firestone 4th row 2nd rack
-Group 38
-945	AB2_D5_18O-7	4th floor Banfield mid row
-961	HA2_D5_18O-7	4th floor Banfield mid row
-2388	AB5_D1_18O-7	4th floor Firestone 4th row 3rd rack
-3957	AA9_D1_18O-7	4th floor Firestone 4th row 2nd rack
-3964	AB9_D3_18O-7	4th floor Firestone 4th row 2nd rack
-941	AB2_D3_18O-7	4th floor Banfield mid row
-Group 39
-2448	HA5_D3_18O-7	4th floor Firestone 4th row 3rd rack
-2383	AA5_D1_18O-7	4th floor Firestone 4th row 3rd rack
-3202	AB7_D5_18O-7	4th floor Firestone 4th row 2nd rack
-4016	HC9_D5_18O-7	4th floor Firestone 4th row 2nd rack
-3961	AA9_D5_18O-7	4th floor Firestone 4th row 2nd rack
-947	AC2_D1_18O-7	4th floor Banfield mid row
-Group 40
-3654	HC8_D3_18O-7	4th floor Firestone 4th row 2nd rack
-1433	AB3_D3_18O-7	4th floor Banfield mid row
-949	AC2_D3_18O-7	4th floor Banfield mid row
-3959	AA9_D3_18O-7	4th floor Firestone 4th row 2nd rack
-971	HC2_D1_18O-7	4th floor Banfield mid row
-931	AA2_D1_18O-7	4th floor Banfield mid row
-Group 41
-3656	HC8_D5_18O-7	4th floor Firestone 4th row 2nd rack
-3644	HA8_D3_18O-7	4th floor Firestone 4th row 2nd rack
-2395	AC5_D3_18O-7	4th floor Firestone 4th row 3rd rack
-977	HC2_D5_18O-7	4th floor Banfield mid row
-957	HA2_D3_18O-7	4th floor Banfield mid row
-1791	HB4_D5_18O-7	4th floor Banfield mid row
-Group 42
-1792	HC4_D1_18O-7	4th floor Banfield mid row
-2036	AB4_D3_18O-7	4th floor Banfield mid row
-2390	AB5_D3_18O-7	4th floor Firestone 4th row 3rd rack
-3200	AB7_D3_18O-7	4th floor Firestone 4th row 2nd rack
-965	HB2_D3_18O-7	4th floor Banfield mid row
-2029	AA4_D1_18O-7	4th floor Banfield mid row
-Group 43
-4002	HA9_D1_18O-7	4th floor Firestone 4th row 2nd rack
-2446	HA5_D1_18O-7	4th floor Firestone 4th row 3rd rack
-4009	HB9_D3_18O-7	4th floor Firestone 4th row 2nd rack
-2041	AC4_D3_18O-7	4th floor Banfield mid row
-1796	HC4_D5_18O-7	4th floor Banfield mid row
-1425	AA3_D3_18O-7	4th floor Banfield mid row
-Group 44
-3647	HB8_D1_18O-7	4th floor Firestone 4th row 2nd rack
-2450	HA5_D5_18O-7	4th floor Firestone 4th row 3rd rack
-1437	AB3_D5_18O-7	4th floor Banfield mid row
-2458	HC5_D3_18O-7	4th floor Firestone 4th row 3rd rack
-1455	HB3_D1_18O-7	4th floor Banfield mid row
-937	AA2_D5_18O-7	4th floor Banfield mid row
-Group 45
-4011	HB9_D5_18O-7	4th floor Firestone 4th row 2nd rack
-1423	AA3_D1_18O-7	4th floor Banfield mid row
-2456	HC5_D1_18O-7	4th floor Firestone 4th row 3rd rack
-2385	AA5_D3_18O-7	4th floor Firestone 4th row 3rd rack
-3646	HA8_D5_18O-7	4th floor Firestone 4th row 2nd rack
-4014	HC9_D3_18O-7	4th floor Firestone 4th row 2nd rack
-Group 46
-3198	AB7_D1_18O-7	4th floor Firestone 4th row 2nd rack
-1463	HC3_D1_18O-7	4th floor Banfield mid row
-4006	HA9_D5_18O-7	4th floor Firestone 4th row 2nd rack
-1429	AA3_D5_18O-7	4th floor Banfield mid row
-2392	AB5_D5_18O-7	4th floor Firestone 4th row 3rd rack
-1465	HC3_D3_18O-7	4th floor Banfield mid row
-Group 47
-1445	AC3_D5_18O-7	4th floor Banfield mid row
-3966	AB9_D5_18O-7	4th floor Firestone 4th row 2nd rack
-3193	AA7_D1_18O-7	4th floor Firestone 4th row 2nd rack
-2453	HB5_D3_18O-7	4th floor Firestone 4th row 3rd rack
-1794	HC4_D3_18O-7	4th floor Banfield mid row
-2034	AB4_D1_18O-7	4th floor Banfield mid row
-Group 48
-939	AB2_D1_18O-7	4th floor Banfield mid row
-3197	AA7_D5_18O-7	4th floor Firestone 4th row 2nd rack
-2031	AA4_D3_18O-7	4th floor Banfield mid row
-3205	AC7_D3_18O-7	4th floor Firestone 4th row 2nd rack
-2460	HC5_D5_18O-7	4th floor Firestone 4th row 3rd rack
-1431	AB3_D1_18O-7	4th floor Banfield mid row
-Group 49
-973	HC2_D3_18O-7	4th floor Banfield mid row
-933	AA2_D3_18O-7	4th floor Banfield mid row
-1784	HA4_D3_18O-7	4th floor Banfield mid row
-2393	AC5_D1_18O-7	4th floor Firestone 4th row 3rd rack
-1786	HA4_D5_18O-7	4th floor Banfield mid row
-1869	HA4_D1_18O-7	4th floor Banfield mid row
-Group 50
-1449	HA3_D3_18O-7	4th floor Banfield mid row
-1789	HB4_D3_18O-7	4th floor Banfield mid row
-2397	AC5_D5_18O-7	4th floor Firestone 4th row 3rd rack
-4007	HB9_D1_18O-7	4th floor Firestone 4th row 2nd rack
-3195	AA7_D3_18O-7	4th floor Firestone 4th row 2nd rack
-3203	AC7_D1_18O-7	4th floor Firestone 4th row 2nd rack
-Group 51
-953	AC2_D5_18O-7	4th floor Banfield mid row
-3971	AC9_D5_18O-7	4th floor Firestone 4th row 2nd rack
-3651	HB8_D5_18O-7	4th floor Firestone 4th row 2nd rack
-1787	HB4_D1_18O-7	4th floor Banfield mid row
-4004	HA9_D3_18O-7	4th floor Firestone 4th row 2nd rack
-955	HA2_D1_18O-7	4th floor Banfield mid row
-Group 52
-3207	AC7_D5_18O-7	4th floor Firestone 4th row 2nd rack
-3642	HA8_D1_18O-7	4th floor Firestone 4th row 2nd rack
-1439	AC3_D1_18O-7	4th floor Banfield mid row
-3962	AB9_D1_18O-7	4th floor Firestone 4th row 2nd rack
-1441	AC3_D3_18O-7	4th floor Banfield mid row
-4012	HC9_D1_18O-7	4th floor Firestone 4th row 2nd rack
+Group J
+J1 1433	AB3_D3_18O-7	4th floor Banfield mid row
+J2 1455	HB3_D1_18O-7	4th floor Banfield mid row
+J3 3964	AB9_D3_18O-7	4th floor Firestone 4th row 2nd rack
+J4 957	HA2_D3_18O-7	4th floor Banfield mid row
+J5 2034	AB4_D1_18O-7	4th floor Banfield mid row
+J6 3200	AB7_D3_18O-7	4th floor Firestone 4th row 2nd rack
+Group K
+K1 1447	HA3_D1_18O-7	4th floor Banfield mid row
+K2 963	HB2_D1_18O-7	4th floor Banfield mid row
+K3 2041	AC4_D3_18O-7	4th floor Banfield mid row
+K4 4004	HA9_D3_18O-7	4th floor Firestone 4th row 2nd rack
+K5 3961	AA9_D5_18O-7	4th floor Firestone 4th row 2nd rack
+K6 3656	HC8_D5_18O-7	4th floor Firestone 4th row 2nd rack
+Group L
+L1 933	AA2_D3_18O-7	4th floor Banfield mid row
+L2 3202	AB7_D5_18O-7	4th floor Firestone 4th row 2nd rack
+L3 3969	AC9_D3_18O-7	4th floor Firestone 4th row 2nd rack
+L4 1786	HA4_D5_18O-7	4th floor Banfield mid row
+L5 971	HC2_D1_18O-7	4th floor Banfield mid row
+L6 1792	HC4_D1_18O-7	4th floor Banfield mid row
+Group M
+M1 2448	HA5_D3_18O-7	4th floor Firestone 4th row 3rd rack
+M2 3957	AA9_D1_18O-7	4th floor Firestone 4th row 2nd rack
+M3 2392	AB5_D5_18O-7	4th floor Firestone 4th row 3rd rack
+M4 2390	AB5_D3_18O-7	4th floor Firestone 4th row 3rd rack
+M5 953	AC2_D5_18O-7	4th floor Banfield mid row
+M6 3193	AA7_D1_18O-7	4th floor Firestone 4th row 2nd rack
+Group N
+N1 2446	HA5_D1_18O-7	4th floor Firestone 4th row 3rd rack
+N2 3652	HC8_D1_18O-7	4th floor Firestone 4th row 2nd rack
+N3 3198	AB7_D1_18O-7	4th floor Firestone 4th row 2nd rack
+N4 1425	AA3_D3_18O-7	4th floor Banfield mid row
+N5 3967	AC9_D1_18O-7	4th floor Firestone 4th row 2nd rack
+N6 3644	HA8_D3_18O-7	4th floor Firestone 4th row 2nd rack
+Group O
+O1 1441	AC3_D3_18O-7	4th floor Banfield mid row
+O2 4016	HC9_D5_18O-7	4th floor Firestone 4th row 2nd rack
+O3 1789	HB4_D3_18O-7	4th floor Banfield mid row
+O4 2458	HC5_D3_18O-7	4th floor Firestone 4th row 3rd rack
+O5 973	HC2_D3_18O-7	4th floor Banfield mid row
+O6 1796	HC4_D5_18O-7	4th floor Banfield mid row
+Group P
+P1 4007	HB9_D1_18O-7	4th floor Firestone 4th row 2nd rack
+P2 961	HA2_D5_18O-7	4th floor Banfield mid row
+P3 1791	HB4_D5_18O-7	4th floor Banfield mid row
+P4 1449	HA3_D3_18O-7	4th floor Banfield mid row
+P5 3647	HB8_D1_18O-7	4th floor Firestone 4th row 2nd rack
+P6 2453	HB5_D3_18O-7	4th floor Firestone 4th row 3rd rack
+Group Q
+Q1 2455	HB5_D5_18O-7	4th floor Firestone 4th row 3rd rack
+Q2 2036	AB4_D3_18O-7	4th floor Banfield mid row
+Q3 955	HA2_D1_18O-7	4th floor Banfield mid row
+Q4 3203	AC7_D1_18O-7	4th floor Firestone 4th row 2nd rack
+Q5 4006	HA9_D5_18O-7	4th floor Firestone 4th row 2nd rack
+Q6 941	AB2_D3_18O-7	4th floor Banfield mid row
+Group R
+R1 3205	AC7_D3_18O-7	4th floor Firestone 4th row 2nd rack
+R2 939	AB2_D1_18O-7	4th floor Banfield mid row
+R3 1465	HC3_D3_18O-7	4th floor Banfield mid row
+R4 1423	AA3_D1_18O-7	4th floor Banfield mid row
+R5 2450	HA5_D5_18O-7	4th floor Firestone 4th row 3rd rack
+R6 3966	AB9_D5_18O-7	4th floor Firestone 4th row 2nd rack
+Group S
+S1 3651	HB8_D5_18O-7	4th floor Firestone 4th row 2nd rack
+S2 1429	AA3_D5_18O-7	4th floor Banfield mid row
+S3 3197	AA7_D5_18O-7	4th floor Firestone 4th row 2nd rack
+S4 4012	HC9_D1_18O-7	4th floor Firestone 4th row 2nd rack
+S5 2388	AB5_D1_18O-7	4th floor Firestone 4th row 3rd rack
+S6 4011	HB9_D5_18O-7	4th floor Firestone 4th row 2nd rack
+Group T
+T1 3959	AA9_D3_18O-7	4th floor Firestone 4th row 2nd rack
+T2 937	AA2_D5_18O-7	4th floor Banfield mid row
+T3 1437	AB3_D5_18O-7	4th floor Banfield mid row
+T4 4002	HA9_D1_18O-7	4th floor Firestone 4th row 2nd rack
+T5 2395	AC5_D3_18O-7	4th floor Firestone 4th row 3rd rack
+T6 2451	HB5_D1_18O-7	4th floor Firestone 4th row 3rd rack
+Group U
+U1 949	AC2_D3_18O-7	4th floor Banfield mid row
+U2 2385	AA5_D3_18O-7	4th floor Firestone 4th row 3rd rack
+U3 1463	HC3_D1_18O-7	4th floor Banfield mid row
+U4 1794	HC4_D3_18O-7	4th floor Banfield mid row
+U5 3649	HB8_D3_18O-7	4th floor Firestone 4th row 2nd rack
+U6 2029	AA4_D1_18O-7	4th floor Banfield mid row
+Group V
+V1 2383	AA5_D1_18O-7	4th floor Firestone 4th row 3rd rack
+V2 931	AA2_D1_18O-7	4th floor Banfield mid row
+V3 1784	HA4_D3_18O-7	4th floor Banfield mid row
+V4 2031	AA4_D3_18O-7	4th floor Banfield mid row
+V5 1869	HA4_D1_18O-7	4th floor Banfield mid row
+V6 2039	AC4_D1_18O-7	4th floor Banfield mid row
+Group W
+W1 2387	AA5_D5_18O-7	4th floor Firestone 4th row 3rd rack
+W2 3207	AC7_D5_18O-7	4th floor Firestone 4th row 2nd rack
+W3 3642	HA8_D1_18O-7	4th floor Firestone 4th row 2nd rack
+W4 977	HC2_D5_18O-7	4th floor Banfield mid row
+W5 945	AB2_D5_18O-7	4th floor Banfield mid row
+W6 1431	AB3_D1_18O-7	4th floor Banfield mid row
+Group X
+X1 969	HB2_D5_18O-7	4th floor Banfield mid row
+X2 1445	AC3_D5_18O-7	4th floor Banfield mid row
+X3 3971	AC9_D5_18O-7	4th floor Firestone 4th row 2nd rack
+X4 3654	HC8_D3_18O-7	4th floor Firestone 4th row 2nd rack
+X5 3646	HA8_D5_18O-7	4th floor Firestone 4th row 2nd rack
+X6 965	HB2_D3_18O-7	4th floor Banfield mid row
+Group Y
+Y1 3195	AA7_D3_18O-7	4th floor Firestone 4th row 2nd rack
+Y2 1787	HB4_D1_18O-7	4th floor Banfield mid row
+Y3 2456	HC5_D1_18O-7	4th floor Firestone 4th row 3rd rack
+Y4 1439	AC3_D1_18O-7	4th floor Banfield mid row
+Y5 3962	AB9_D1_18O-7	4th floor Firestone 4th row 2nd rack
+Y6 4014	HC9_D3_18O-7	4th floor Firestone 4th row 2nd rack
+Group Z
+Z1 4009	HB9_D3_18O-7	4th floor Firestone 4th row 2nd rack
+Z2 947	AC2_D1_18O-7	4th floor Banfield mid row
+Z3 1457	HB3_D3_18O-7	4th floor Banfield mid row
+Z4 2397	AC5_D5_18O-7	4th floor Firestone 4th row 3rd rack
+Z5 2460	HC5_D5_18O-7	4th floor Firestone 4th row 3rd rack
+Z6 2393	AC5_D1_18O-7	4th floor Firestone 4th row 3rd rack
 Total 16O extractions: 210. Total 16O groups: 35
 Total 18O extractions: 102. Total 18O groups: 17
