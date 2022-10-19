@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
-from tokenize import group
-import numpy as np
 from random import shuffle, seed
-import csv, re, sys, string
+import csv, sys, string, json
 
 def check_replicates(groupedEntries:list):
     '''Checks a list for repeated replicate samples.
@@ -105,11 +103,13 @@ shuffled_16O = recursively_shuffle_until_noFails(sip_entries16, n)
 shuffled_18O = recursively_shuffle_until_noFails(sip_entries18, n)
 
 groupIDs = list(string.ascii_letters)
+groupIDs_to_dbIDs = dict()
 
 print("16O groups:")
 for i,x in enumerate(shuffled_16O):
     print(f"Group {groupIDs[i]}")
     for oneTosix,y in enumerate(x):
+        groupIDs_to_dbIDs[f'{groupIDs[i]}{oneTosix+1}'] = (sip_entries_withDB16[y][0], y)
         print(f"{groupIDs[i]}{oneTosix+1} {sip_entries_withDB16[y][0]}\t{y}\t{sip_entries_withDB16[y][1]}")
     #print(','.join(x))
     #print(','.join([sip_entries_withDB16[y] for y in x]))
@@ -119,9 +119,13 @@ print("18O groups:")
 for k,x in enumerate(shuffled_18O):
     print(f"Group {groupIDs[i+k+1]}")
     for oneTosix,y in enumerate(x):
+        groupIDs_to_dbIDs[f'{groupIDs[i+k+1]}{oneTosix+1}'] = (sip_entries_withDB18[y][0], y)
         print(f"{groupIDs[i+k+1]}{oneTosix+1} {sip_entries_withDB18[y][0]}\t{y}\t{sip_entries_withDB18[y][1]}")
     #print(','.join(x))
     #print(','.join([sip_entries_withDB18[y] for y in x]))
 
 print(f'Total 16O extractions: {len(sip_entries16)}. Total 16O groups: {len(shuffled_16O)}')
 print(f'Total 18O extractions: {len(sip_entries18)}. Total 18O groups: {len(shuffled_18O)}')
+
+with open("./data/groupIDs_to_dbIDs.json", "w") as outfile:
+    json.dump(groupIDs_to_dbIDs, outfile)
