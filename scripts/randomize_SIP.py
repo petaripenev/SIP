@@ -3,7 +3,7 @@
 from tokenize import group
 import numpy as np
 from random import shuffle, seed
-import csv, re, sys
+import csv, re, sys, string
 
 def check_replicates(groupedEntries:list):
     '''Checks a list for repeated replicate samples.
@@ -102,20 +102,22 @@ n = 6
 shuffled_16O = recursively_shuffle_until_noFails(sip_entries16, n)
 shuffled_18O = recursively_shuffle_until_noFails(sip_entries18, n)
 
+groupIDs = list(string.ascii_letters)
+
 print("16O groups:")
 for i,x in enumerate(shuffled_16O):
-    print(f"Group {i+1}")
-    for y in x:
-        print(f"{sip_entries_withDB16[y][0]}\t{y}\t{sip_entries_withDB16[y][1]}")
+    print(f"Group {groupIDs[i]}")
+    for oneTosix,y in enumerate(x):
+        print(f"{groupIDs[i]}{oneTosix+1}\t{sip_entries_withDB16[y][0]}\t{y}\t{sip_entries_withDB16[y][1]}")
     #print(','.join(x))
     #print(','.join([sip_entries_withDB16[y] for y in x]))
 
 print()
 print("18O groups:")
 for k,x in enumerate(shuffled_18O):
-    print(f"Group {i+k+2}")
-    for y in x:
-        print(f"{sip_entries_withDB18[y][0]}\t{y}\t{sip_entries_withDB18[y][1]}")
+    print(f"Group {groupIDs[i+k+1]}")
+    for oneTosix,y in enumerate(x):
+        print(f"{groupIDs[i+k+1]}{oneTosix+1} {sip_entries_withDB18[y][0]}\t{y}\t{sip_entries_withDB18[y][1]}")
     #print(','.join(x))
     #print(','.join([sip_entries_withDB18[y] for y in x]))
 
