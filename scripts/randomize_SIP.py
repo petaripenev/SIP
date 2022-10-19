@@ -14,11 +14,13 @@ def check_replicates(groupedEntries:list):
 
 def check_weights(groupedEntries:list):
     '''Checks a list for even number of D1-2 samples.'''
-    d1_or_d2 = list()
+    d1_or_d2, d3 = list(), list()
     for x in groupedEntries:
         if '_D1_' in x or '_D2_' in x:
             d1_or_d2.append(x)
-    return len(d1_or_d2) % 2 != 0
+        if '_D3_' in x:
+            d3.append(x)
+    return len(d1_or_d2) % 2 != 0 or len(d3) % 2 != 0
 
 def find_and_remove_failed_shuffles(list_of_groupedEntries:list):
     '''Finds groups of entries where the repeated replicate rule fails,
@@ -62,7 +64,7 @@ sip_entries_withDB18, sip_entries_withDB16 = dict(), dict()
 with open('./data/all_samples_afterW9.csv') as csvFile:
     reader = csv.reader(csvFile)
     #seed(int(sys.argv[1]))
-    seed(10)
+    seed(2)
     for row in reader:
         #Skip lines starting with #
         if '#' == row[0][0]:
@@ -108,7 +110,7 @@ print("16O groups:")
 for i,x in enumerate(shuffled_16O):
     print(f"Group {groupIDs[i]}")
     for oneTosix,y in enumerate(x):
-        print(f"{groupIDs[i]}{oneTosix+1}\t{sip_entries_withDB16[y][0]}\t{y}\t{sip_entries_withDB16[y][1]}")
+        print(f"{groupIDs[i]}{oneTosix+1} {sip_entries_withDB16[y][0]}\t{y}\t{sip_entries_withDB16[y][1]}")
     #print(','.join(x))
     #print(','.join([sip_entries_withDB16[y] for y in x]))
 
