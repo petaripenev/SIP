@@ -4,6 +4,19 @@ import re, csv, os
 import pandas as pd 
 from dataclasses import dataclass, field
 
+TUBES_TO_PLATES = {'A' : 1,
+                   'B' : 1,
+                   'C' : 1,
+                   'D' : 1,
+                   'E' : 2,
+                   'F' : 2,
+                   'G' : 2,
+                   'H' : 2,
+                   'I' : 3,
+                   'J' : 3,
+                   'K' : 3,
+                   'L' : 3}
+
 @dataclass
 class SIPSample:
     sampling_site: str
@@ -13,6 +26,7 @@ class SIPSample:
     isotope: str
     incubation_length: int
     plate: str
+    tube: str
     dna_yield: float
     concentrations: "list[float]" = field(default_factory=list, repr=False)
     densities: "list[float]" = field(default_factory=list, repr=False)
@@ -42,7 +56,8 @@ def parseSIPoutput(df):
         sipData[col] = {'concentrations':list(df[f'{col}-conc'][3:24]),
                     'densities'     :list(df[f'{col}-density'][3:24]),
                     'wells'         :list(df[col][3:24]),
-                    'plate'         :df[col][0],
+                    'plate'         :TUBES_TO_PLATES[df[col][0]],
+                    'tube'          :df[col][0],
                     'dna_yield'     :df[f'{col}-conc'][24]}
                         
     return sipData
