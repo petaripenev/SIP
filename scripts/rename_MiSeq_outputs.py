@@ -77,6 +77,7 @@ def createSIPSampleClasses(SIPSample, sipData, filePath):
                               row['sample_id'][7:9],
                               row['sample_id'].split('-')[1],
                               sipData[int(row['id'])]['plate'],
+                              sipData[int(row['id'])]['tube'],
                               sipData[int(row['id'])]['dna_yield'],
                               sipData[int(row['id'])]['concentrations'],
                               sipData[int(row['id'])]['densities'],
