@@ -1,0 +1,6 @@
+comparisonID	iso.compare	trt.code.1	trt.code.2	trt.refs	days	notes
+1	13C	I_Full_12C	I_Full_13C	I_Full_12C	5	NA
+
+
+
+

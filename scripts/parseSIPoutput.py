@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 from batch_125 import dbID_to_namedID, isotopePairs
 
-excel_location = 'data/220908_Batch_125_Water_Yr_Summary.xlsx'
+excel_location = 'data/fractionation/221109 Batch 129 Water Year Summary.xlsx'
 data = pd.read_excel(excel_location, 'Summary')
 
 @dataclass
@@ -161,7 +161,7 @@ for sample in samples:
         iso18Osamples.append(sample)
 
 #Binning second pass
-improve_SIP_bins(iso18Osamples)
+#improve_SIP_bins(iso18Osamples)
 
 #Bin output
 for sample in iso18Osamples:
@@ -204,4 +204,4 @@ for ax in axs.flat:
     ax.label_outer()
 
 plt.plot()
-plt.savefig('figures/H3_D5_7-30_18O.svg', dpi=300)
+plt.savefig('figures/batch129.svg', dpi=300)
