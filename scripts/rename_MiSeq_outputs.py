@@ -25,6 +25,13 @@ class SIPSample:
     depth: "tuple[int]"
     isotope: str
     incubation_length: int
+    sample_weight: float
+    grams_soil_extracted: float
+    concentration_DNA_extracted: float
+    total_ul_DNA_extracted: float
+    ul_DNA_SIP_loaded: float
+    h20_added: float
+    initial_GWC: float
     plate: str
     tube: str
     dna_yield: float
@@ -38,6 +45,14 @@ class SIPSample:
 
     def __repr__(self):
         return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth[0]}-{self.depth[1]}_{self.isotope}O-{self.incubation_length}"
+
+def getGWC(sampleID, filePath):
+    '''Get the GWC of a sample from the metadata file'''
+    with open(filePath) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if row['sample_id'] == sampleID:
+                return float(row['GWC %'])
 
 def parseSIPoutput(df):
     '''Parse the SIP output from Mike's script into a dictionary of SIPSamples.
@@ -69,6 +84,12 @@ def createSIPSampleClasses(SIPSample, sipData, filePath):
         for row in reader:
             if int(row['id']) not in sipData.keys():
                 continue
+            gwc_before_water_addition = float(row['Lab dried GWC (%)'])
+            if gwc_before_water_addition == '':
+                gwc_before_water_addition = getGWC(f"{row['sample_id'][0:6]}_GSC", filePath)
+            sample_weight = float(row['Weight dried (gr)'])
+            if sample_weight == '':
+                sample_weight = float(row['Weight (gr)'])
             sipData[int(row['id'])]['sample_id'] = row['sample_id']
             newSample = SIPSample(row['sample_id'][0],
                               row['sample_id'][1],
@@ -76,6 +97,13 @@ def createSIPSampleClasses(SIPSample, sipData, filePath):
                               (row['depth'].split('-')[0],row['depth'].split('-')[1]),
                               row['sample_id'][7:9],
                               row['sample_id'].split('-')[1],
+                              sample_weight,
+                              float(row['Grams soil DNA extr1']),
+                              float(row['DNA concentration extr1 (ng/ul)']),
+                              float(row['Volume extr1 (ul)']),
+                              float(row['DNA loaded for SIP (ul)']),
+                              float(row['H2O amount (ml)']),
+                              gwc_before_water_addition,
                               sipData[int(row['id'])]['plate'],
                               sipData[int(row['id'])]['tube'],
                               sipData[int(row['id'])]['dna_yield'],

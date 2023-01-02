@@ -1,0 +1,2 @@
+comparisonID	iso.compare	trt.code.1	trt.code.2	trt.refs	days	notes
+1	18O	30_16O	30_18O	7_16O;30_16O	30	NA
