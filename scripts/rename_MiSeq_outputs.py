@@ -18,20 +18,23 @@ TUBES_TO_PLATES = {'A' : 1,
                    'L' : 3}
 
 @dataclass
-class SIPSample:
+class WaterYearSample:
     sampling_site: str
     replicate: str
     sampling_week: str
     depth: "tuple[int]"
+    sample_weight: float
+    initial_GWC: float
+
+@dataclass
+class SIPSample(WaterYearSample):
     isotope: str
     incubation_length: int
-    sample_weight: float
     grams_soil_extracted: float
     concentration_DNA_extracted: float
     total_ul_DNA_extracted: float
     ul_DNA_SIP_loaded: float
     h20_added: float
-    initial_GWC: float
     plate: str
     tube: str
     dna_yield: float
@@ -67,11 +70,13 @@ def parseSIPoutput(df):
             continue
         if len(str(col)) < 4:
             continue
-
+        plate = df[col][0]
+        if type(df[col][0]) != int:
+            plate = TUBES_TO_PLATES[df[col][0]]
         sipData[col] = {'concentrations':list(df[f'{col}-conc'][3:24]),
                     'densities'     :list(df[f'{col}-density'][3:24]),
                     'wells'         :list(df[col][3:24]),
-                    'plate'         :TUBES_TO_PLATES[df[col][0]],
+                    'plate'         :plate,
                     'tube'          :df[col][0],
                     'dna_yield'     :df[f'{col}-conc'][24]}
                         
@@ -95,15 +100,15 @@ def createSIPSampleClasses(SIPSample, sipData, filePath):
                               row['sample_id'][1],
                               row['sample_id'][2],
                               (row['depth'].split('-')[0],row['depth'].split('-')[1]),
+                              sample_weight,
+                              gwc_before_water_addition,
                               row['sample_id'][7:9],
                               row['sample_id'].split('-')[1],
-                              sample_weight,
                               float(row['Grams soil DNA extr1']),
                               float(row['DNA concentration extr1 (ng/ul)']),
                               float(row['Volume extr1 (ul)']),
                               float(row['DNA loaded for SIP (ul)']),
                               float(row['H2O amount (ml)']),
-                              gwc_before_water_addition,
                               sipData[int(row['id'])]['plate'],
                               sipData[int(row['id'])]['tube'],
                               sipData[int(row['id'])]['dna_yield'],
@@ -115,10 +120,10 @@ def createSIPSampleClasses(SIPSample, sipData, filePath):
 
 def main():
     #Read in the SIP output
-    df = pd.read_excel("./metadata/Angelo_W4_SIP.xlsx", sheet_name='Summary', engine='openpyxl')
+    df = pd.read_excel("./data/fractionation/Angelo_W4_SIP.xlsx", sheet_name='Summary', engine='openpyxl')
 
     sipData = parseSIPoutput(df)
-    sipSamples = createSIPSampleClasses(SIPSample, sipData, './metadata/all_samples_afterW10.csv')
+    sipSamples = createSIPSampleClasses(SIPSample, sipData, './data/metadata/all_samples.csv')
 
     # Iterate over files in folder ./fastq
     fastq = glob('./fastq/*.fastq')
