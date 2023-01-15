@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from dataclasses import dataclass
 
-from batch_125 import dbID_to_namedID, isotopePairs
+from .batch_125 import dbID_to_namedID, isotopePairs
 
 excel_location = 'data/fractionation/221109 Batch 129 Water Year Summary.xlsx'
 data = pd.read_excel(excel_location, 'Summary')

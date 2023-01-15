@@ -15,8 +15,8 @@ def laodTaxonomyTable(taxonomyTablePath):
         for i, row in enumerate(reader):
             if i == 0:
                 continue
-            zOTUs.append(row[0])
-            taxonomies.append(row[1].replace(' ','').replace('d__','').replace('p__','').replace('c__','').replace('o__','').replace('f__','').replace('g__','').replace('s__',''))
+            zOTUs.append(row[0].replace('ASV','X'))
+            taxonomies.append(row[1].replace(' ',''))#.replace('d__','').replace('p__','').replace('c__','').replace('o__','').replace('f__','').replace('g__','').replace('s__',''))
     return zOTUs, taxonomies
 
 def loadZOTUtable(zOTUtablePath):
@@ -26,21 +26,28 @@ def loadZOTUtable(zOTUtablePath):
     with open(zOTUtablePath, 'r') as f:
         reader = csv.reader(f, delimiter='\t')
         for i, row in enumerate(reader):
+            renamedASV = row[0].replace('ASV','X')
             if i == 0:
                 sampleIDsWithWells = row[1:]
                 continue
-            zOTUtable[row[0]] = dict()
+            zOTUtable[renamedASV] = dict()
             for j, abundance in enumerate(row[1:]):
-                zOTUtable[row[0]][sampleIDsWithWells[j]] = abundance
+                zOTUtable[renamedASV][sampleIDsWithWells[j]] = abundance
 
     return zOTUtable
 
 def getASVsPerSample(zOTUs, zOTUtable, sipSample, well):
     asvAbundances = list()
     for asv in zOTUs:
-        if asv in zOTUtable.keys():
-            if sipSample.oneword_id+str(sipSample.plate)+well in zOTUtable[asv].keys():
-                asvAbundances.append(zOTUtable[asv][sipSample.oneword_id+str(sipSample.plate)+well])
+        if asv not in zOTUtable.keys():
+            continue
+        longID = sipSample.oneword_id+str(sipSample.plate)+well
+        
+        if longID+'redo' in zOTUtable[asv].keys() and longID in zOTUtable[asv].keys():
+            asvAbundances.append(zOTUtable[asv][longID+'redo'])
+            continue
+        elif longID in zOTUtable[asv].keys():
+            asvAbundances.append(zOTUtable[asv][longID])
     return asvAbundances
 
 def main():
@@ -57,16 +64,20 @@ def main():
             f.write(f'{taxonomy}\t{zOTU}\n')
     
     with open('./processing/zotu_table.csv', 'w') as f:
-        f.write(f'ID,tube,Fraction,Habitat,Replicate,Time,Isotope,Trt.code,Density,DNA.ng.fraction,copies.ul{",".join(zOTUs)}\n')
-        for i, sipSample in enumerate(sipSamples):
+        f.write(f'ID\ttube\tFraction\tHabitat\tReplicate\tTime\tIsotope\tTrt.code\tDensity\tDNA.ng.fraction\tcopies.ul\t{chr(0x9).join(zOTUs)}\n')
+        i = 1
+        for sipSample in sipSamples:
             for j, (density, conc, well) in enumerate(zip(sipSample.densities, sipSample.concentrations, sipSample.wells)):
-                if conc*FINAL_SIP_VOLUME < 1:
-                    continue
+                if conc < 0:
+                    conc = 0
                 asvAbundances = getASVsPerSample(zOTUs, zOTUtable, sipSample, well)
                 if len(asvAbundances) == 0:
                     continue
+                totalAbundance = sum([float(x) for x in asvAbundances])
+                relative_abundances = [str(float(x)/totalAbundance) for x in asvAbundances]
                 tube = sipSample.sample_id.replace('50-80','D5').replace('-','_')
-                f.write(f'{i+1},{tube},{j+1},D5,{ABC_TO_NUMBERS[sipSample.replicate]},{sipSample.incubation_length},{sipSample.isotope}O,{tube}_{j+1},{density},{conc*FINAL_SIP_VOLUME},0,{",".join(asvAbundances)}\n')
+                f.write(f'{i}\t{tube}\t{j+1}\tD5\t{ABC_TO_NUMBERS[sipSample.replicate]}\t{sipSample.incubation_length}\t{sipSample.isotope}O\t{tube}_{j+1}\t{density}\t{conc*FINAL_SIP_VOLUME}\t{conc*FINAL_SIP_VOLUME}\t{chr(0x9).join(relative_abundances)}\n')
+                i += 1
 
     with open('./processing/copies_per_g_soil.csv', 'w') as f:
         f.write(f'unique.tube\tg.wet.soil.extracted\ttotal.DNA.extracted.ng.ul\ttotal.DNA.extracted.ng\ttotal.DNA.extracted.ug\tug.DNA.g.DM.soil\tdry.wet\tg.dry.soil.extracted\tug.DNA.added.to.tube\tg.dry.soil.tube\n')

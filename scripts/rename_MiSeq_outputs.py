@@ -27,6 +27,23 @@ class WaterYearSample:
     initial_GWC: float
 
 @dataclass
+class UnfracSIPSample(WaterYearSample):
+    isotope: str
+    incubation_length: int
+    grams_soil_extracted: float
+    concentration_DNA_extracted: float
+    total_ul_DNA_extracted: float
+    h20_added: float
+
+    def __post_init__(self):
+        self.sample_id = self.__repr__()
+        self.oneword_id = self.sample_id.replace('-','').replace('_','')
+
+    def __repr__(self):
+        return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth[0]}-{self.depth[1]}_{self.isotope}O-{self.incubation_length}"
+    
+
+@dataclass
 class SIPSample(WaterYearSample):
     isotope: str
     incubation_length: int
