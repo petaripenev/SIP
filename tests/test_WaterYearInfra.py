@@ -20,16 +20,33 @@ class TestWaterYearSample(unittest.TestCase):
         with self.assertRaises(FileNotFoundError) as context:
             WaterYearSample('A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_sampless.csv')
-        self.assertTrue("Metadata file ./data/metadata/all_sampless.csv not found!" in str(context.exception))
+        self.assertTrue("Metadata file ./data/metadata/all_sampless.csv not found!" 
+                            in str(context.exception))
         with self.assertRaises(TypeError) as context:
             WaterYearSample('A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_samples.csv', core_GWC=0.1)
-        self.assertTrue("__init__() got an unexpected keyword argument 'core_GWC'" in str(context.exception))
+        self.assertTrue("__init__() got an unexpected keyword argument 'core_GWC'" 
+                            in str(context.exception))
         with self.assertRaises(TypeError) as context:
             WaterYearSample('A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_samples.csv', core_pH=0.1)
-        self.assertTrue("__init__() got an unexpected keyword argument 'core_pH'" in str(context.exception))
-        with self.assertRaises(ValueError) as context:
+        self.assertTrue("__init__() got an unexpected keyword argument 'core_pH'" 
+                            in str(context.exception))
+        with self.assertWarns(RuntimeWarning) as context:
             WaterYearSample('H', 'B', '1', (20, 30), 'D3',
                 '2020-01-01', './data/metadata/all_samples.csv')
-        self.assertTrue('Property GWC % is empty in metadata file at row HB1_D3_GSC!' in str(context.exception))
+        self.assertTrue('Property GWC % is empty in metadata file at row HB1_D3_GSC!' 
+                            in str(context.warning))
+
+    def testGet_experiment_property(self):
+        s1 = WaterYearSample('A', 'A', '1', (0, 10), 'D1', '2020-01-01', './data/metadata/all_samples.csv')
+        self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','GSC','pH'), 4.63)
+        self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','GSC','GWC %'), 24.7396979)
+
+        with self.assertRaises(KeyError) as context:
+            s1._get_experiment_property('./data/metadata/all_samples.csv','GSC','NonExistingProperty')
+        self.assertTrue('Property NonExistingProperty not found in metadata file at row AA1_D1_GSC!' in str(context.exception))
+
+        with self.assertRaises(KeyError) as context:
+            s1._get_experiment_property('./data/metadata/all_samples.csv','NonExistingExperiment','pH')
+        self.assertTrue('Sample AA1_D1_NonExistingExperiment not found in metadata file!' in str(context.exception))
