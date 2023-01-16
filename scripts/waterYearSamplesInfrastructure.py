@@ -53,28 +53,19 @@ class WaterYearSample:
 class DNAextractionSIPSample(WaterYearSample):
     isotope: str
     incubation_length: int
-    grams_soil_extracted: float = field(default=None, init=False)
-    concentration_DNA_extracted: float = field(default=None, init=False)
-    total_ul_DNA_extracted: float = field(default=None, init=False)
-    h20_added: float = field(default=None, init=False)
-    ATTRIBUTES_TO_PROPERTIES = {
-        'grams_soil_extracted': 'Grams soil for DNA extraction',
-        'concentration_DNA_extracted': 'DNA concentration (ng/ul)',
-        'total_ul_DNA_extracted': 'Volume DNA extraction (ul)',
-        'h20_added': 'H2O amount (ml)'
-    }
+    grams_soil_extracted: float = field(default=None, init=False, metadata={'property': 'Grams soil for DNA extraction'})
+    concentration_DNA_extracted: float = field(default=None, init=False, metadata={'property': 'DNA concentration (ng/ul)'})
+    total_ul_DNA_extracted: float = field(default=None, init=False, metadata={'property': 'Volume DNA extraction (ul)'})
+    h20_added: float = field(default=None, init=False, metadata={'property': 'H2O amount (ml)'})
 
     def __post_init__(self):
         super().__post_init__()
         self.sample_id = f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth_str}"
         self.experiment = f"{self.isotope}-{self.incubation_length}"
-        none_attributes = [field.name for field in fields(self) if getattr(self, field.name) is None]
+        none_attributes = [field for field in fields(self) if getattr(self, field.name) is None]
         for attribute in none_attributes:
-            if attribute not in self.ATTRIBUTES_TO_PROPERTIES.keys():
-                continue
-            property = self.ATTRIBUTES_TO_PROPERTIES[attribute]
-            setattr(self, attribute, self._get_experiment_property(self.metadata_file_path, 
-                self.core_id, self.experiment, property))
+            property = attribute.metadata['property']
+            setattr(self, attribute.name, self._get_experiment_property(self.metadata_file_path, self.core_id, self.experiment, property))
 
     def __repr__(self):
         return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth_str}_{self.isotope}-{self.incubation_length}"
