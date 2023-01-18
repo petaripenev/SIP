@@ -50,41 +50,42 @@ class WaterYearSample:
         raise KeyError(f"Sample {core_id}_{experiment} not found in metadata file!")
 
 @dataclass
-class DNAextractionSIPSample(WaterYearSample):
-    isotope: str
-    incubation_length: int
-    grams_soil_extracted: float = field(default=None, init=False, metadata={'property': 'Grams soil for DNA extraction'})
+class DNAextractionSample(WaterYearSample):
+    experiment: str
+    grams_soil_extracted: float = field(default=None, init=False, metadata={'property': 'Soil for DNA extraction (gr)'})
     concentration_DNA_extracted: float = field(default=None, init=False, metadata={'property': 'DNA concentration (ng/ul)'})
     total_ul_DNA_extracted: float = field(default=None, init=False, metadata={'property': 'Volume DNA extraction (ul)'})
-    h20_added: float = field(default=None, init=False, metadata={'property': 'H2O amount (ml)'})
 
     def __post_init__(self):
         super().__post_init__()
-        self.sample_id = f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth_str}"
-        self.experiment = f"{self.isotope}-{self.incubation_length}"
         none_attributes = [field for field in fields(self) if getattr(self, field.name) is None]
         for attribute in none_attributes:
+            if 'property' not in attribute.metadata.keys():
+                warn(f"Attribute {attribute.name} is empty in metadata file for core {self.core_id}!", RuntimeWarning)
+                continue
             property = attribute.metadata['property']
             setattr(self, attribute.name, self._get_experiment_property(self.metadata_file_path, self.core_id, self.experiment, property))
 
     def __repr__(self):
-        return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth_str}_{self.isotope}-{self.incubation_length}"
+        return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth_str}_{self.experiment}"
 
 @dataclass
-class FractionatedSIPSample(DNAextractionSIPSample):
+class FractionatedSIPSample(DNAextractionSample):
     ul_DNA_SIP_loaded: float
     plate: str
     tube: str
     dna_yield: float
+    h20_added: float = field(default=None, init=False, metadata={'property': 'H2O amount (ml)'})
     concentrations: "list[float]" = field(default_factory=list, repr=False)
     densities: "list[float]" = field(default_factory=list, repr=False)
     wells: "list[str]" = field(default_factory=list, repr=False)
 
     def __post_init__(self):
+        super().__post_init__()
         self.sample_id = self.__repr__()
         self.oneword_id = self.sample_id.replace('-','').replace('_','')
 
     def __repr__(self):
-        return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth[0]}-{self.depth[1]}_{self.isotope}O-{self.incubation_length}"
+        return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth_str}_{self.experiment}"
 
 
