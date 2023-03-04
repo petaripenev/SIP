@@ -3,7 +3,7 @@ from scripts.waterYearSamplesInfrastructure import WaterYearSample, DNAextractio
 
 class TestWaterYearSample(unittest.TestCase):
     def testPost(self):
-        s1 = WaterYearSample('A', 'A', '1', (0, 10), 'D1', '2020-01-01', './data/metadata/all_samples.csv')
+        s1 = WaterYearSample(1,'A', 'A', '1', (0, 10), 'D1', '2020-01-01', './data/metadata/all_samples.csv')
         self.assertEqual(s1.sampling_site, 'A')
         self.assertEqual(s1.replicate, 'A')
         self.assertEqual(s1.sampling_week, '1')
@@ -18,28 +18,28 @@ class TestWaterYearSample(unittest.TestCase):
 
         # Test error producing inputs
         with self.assertRaises(FileNotFoundError) as context:
-            WaterYearSample('A', 'A', '1', (0, 10), 'D1', 
+            WaterYearSample(1,'A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_sampless.csv')
         self.assertTrue("Metadata file ./data/metadata/all_sampless.csv not found!" 
                             in str(context.exception))
         with self.assertRaises(TypeError) as context:
-            WaterYearSample('A', 'A', '1', (0, 10), 'D1', 
+            WaterYearSample(1,'A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_samples.csv', core_GWC=0.1)
         self.assertTrue("__init__() got an unexpected keyword argument 'core_GWC'" 
                             in str(context.exception))
         with self.assertRaises(TypeError) as context:
-            WaterYearSample('A', 'A', '1', (0, 10), 'D1', 
+            WaterYearSample(1,'A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_samples.csv', core_pH=0.1)
         self.assertTrue("__init__() got an unexpected keyword argument 'core_pH'" 
                             in str(context.exception))
         with self.assertWarns(RuntimeWarning) as context:
-            WaterYearSample('H', 'B', '1', (20, 30), 'D3',
+            WaterYearSample(1,'H', 'B', '1', (20, 30), 'D3',
                 '2020-01-01', './data/metadata/all_samples.csv')
         self.assertTrue('Property GWC % is empty in metadata file at row HB1_D3_GSC!' 
                             in str(context.warning))
 
     def testGet_experiment_property(self):
-        s1 = WaterYearSample('A', 'A', '1', (0, 10), 'D1', '2020-01-01', './data/metadata/all_samples.csv')
+        s1 = WaterYearSample(1,'A', 'A', '1', (0, 10), 'D1', '2020-01-01', './data/metadata/all_samples.csv')
         self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','AA1_D1', 'GSC','pH'), 4.63)
         self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','AA1_D1','GSC','GWC %'), 24.7396979)
 
@@ -53,7 +53,7 @@ class TestWaterYearSample(unittest.TestCase):
 
 class TestDNAextractionSample(unittest.TestCase):
     def testPost(self):
-        s1 = DNAextractionSample('A', 'C', '4', (50, 80), 'D5', '2022-05-19', './data/metadata/all_samples.csv', '18O-30')
+        s1 = DNAextractionSample(1,'A', 'C', '4', (50, 80), 'D5', '2022-05-19', './data/metadata/all_samples.csv', '18O-30')
         self.assertEqual(s1.sampling_site, 'A')
         self.assertEqual(s1.replicate, 'C')
         self.assertEqual(s1.sampling_week, '4')
@@ -71,33 +71,34 @@ class TestDNAextractionSample(unittest.TestCase):
         
         # Test error producing inputs
         with self.assertRaises(FileNotFoundError) as context:
-            DNAextractionSample('A', 'A', '1', (0, 10), 'D1', 
+            DNAextractionSample(1,'A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_sampless.csv', '16O-7')
         self.assertTrue("Metadata file ./data/metadata/all_sampless.csv not found!"
                             in str(context.exception))
         with self.assertRaises(TypeError) as context:
-            DNAextractionSample('A', 'A', '1', (0, 10), 'D1', 
+            DNAextractionSample(1,'A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_samples.csv', '16O-7', core_GWC=0.1)
         self.assertTrue("__init__() got an unexpected keyword argument 'core_GWC'"
                             in str(context.exception))
         with self.assertRaises(TypeError) as context:
-            DNAextractionSample('A', 'A', '1', (0, 10), 'D1', 
+            DNAextractionSample(1,'A', 'A', '1', (0, 10), 'D1', 
                 '2020-01-01', './data/metadata/all_samples.csv', '16O-7', core_pH=0.1)
         self.assertTrue("__init__() got an unexpected keyword argument 'core_pH'"
                             in str(context.exception))
         with self.assertWarns(RuntimeWarning) as context:
-            DNAextractionSample('H', 'B', '1', (20, 30), 'D3',
+            DNAextractionSample(1,'H', 'B', '1', (20, 30), 'D3',
                 '2020-01-01', './data/metadata/all_samples.csv', '16O-7')
         self.assertTrue('Property GWC % is empty in metadata file at row HB1_D3_GSC!'
                             in str(context.warning))
 
     def testGet_experiment_property(self):
-        s1 = DNAextractionSample('A', 'C', '4', (50, 80), 'D5', '2022-05-19', './data/metadata/all_samples.csv', '18O-30')
+        s1 = DNAextractionSample(1,'A', 'C', '4', (50, 80), 'D5', '2022-05-19', './data/metadata/all_samples.csv', '18O-30')
         self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','AC4_D5', 'GSC','pH'), 4.315)
         self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','AC4_D5','GSC','GWC %'), 18.93930735)
         self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','AC4_D5','18O-30','Soil for DNA extraction (gr)'), 5.994)
         self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','AC4_D5','18O-30','DNA concentration (ng/ul)'), 150.8)
         self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples.csv','AC4_D5','18O-30','Volume DNA extraction (ul)'), 90.0)
+        self.assertEqual(s1._get_experiment_property('./data/metadata/all_samples_totCN.csv','AA5_D5','GSC','Total_C(%)'),0.437232)
 
         with self.assertRaises(KeyError) as context:
             s1._get_experiment_property('./data/metadata/all_samples.csv','AA1_D1','GSC','NonExistingProperty')
@@ -107,3 +108,5 @@ class TestDNAextractionSample(unittest.TestCase):
             s1._get_experiment_property('./data/metadata/all_samples.csv','AA1_D1','NonExistingExperiment','pH')
         self.assertTrue('Sample AA1_D1_NonExistingExperiment not found in metadata file!' in str(context.exception))
 
+if __name__ == '__main__':
+    unittest.main()

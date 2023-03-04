@@ -8,6 +8,7 @@ from warnings import warn
 
 @dataclass
 class WaterYearSample:
+    id: int
     sampling_site: str
     replicate: str
     sampling_week: str
@@ -75,15 +76,19 @@ class FractionatedSIPSample(DNAextractionSample):
     plate: str
     tube: str
     dna_yield: float
-    h20_added: float = field(default=None, init=False, metadata={'property': 'H2O amount (ml)'})
+    H2O_added: float = field(default=None, init=False, metadata={'property': 'H2O amount (ml)'})
     concentrations: "list[float]" = field(default_factory=list, repr=False)
     densities: "list[float]" = field(default_factory=list, repr=False)
     wells: "list[str]" = field(default_factory=list, repr=False)
+    fraction_volumes: "list[float]" = field(default_factory=list, repr=False)
 
     def __post_init__(self):
         super().__post_init__()
         self.sample_id = self.__repr__()
         self.oneword_id = self.sample_id.replace('-','').replace('_','')
+        self.area = [a*b for a,b in zip(self.densities,self.concentrations)]
+        self.weighted_mean_density = sum(self.area)/sum(self.concentrations)
+        self.remainingDNAperFraction = [((abs(conc)+conc)/2)*vol for conc,vol in zip(self.concentrations, self.fraction_volumes)]
 
     def __repr__(self):
         return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth_str}_{self.experiment}"
