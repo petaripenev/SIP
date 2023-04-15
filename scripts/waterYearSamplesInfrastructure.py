@@ -45,7 +45,7 @@ class WaterYearSample:
                 if property not in row.keys():
                     raise KeyError(f"Property {property} not found in metadata file at row {row['sample_id']}!")
                 if row[property] == '':
-                    warn(f"Property {property} is empty in metadata file at row {row['sample_id']}!", RuntimeWarning)
+                    #warn(f"Property {property} is empty in metadata file at row {row['sample_id']}!", RuntimeWarning)
                     return None
                 return float(row[property])
         raise KeyError(f"Sample {core_id}_{experiment} not found in metadata file!")
