@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 import sys, csv, argparse
 import numpy as np
 import pandas as pd
@@ -11,7 +10,10 @@ from itertools import combinations
 from typing import List
 from math import ceil
 
-from scripts.waterYearSamplesInfrastructure import FractionatedSIPSample
+#So that tests run from the root directory
+sys.path.append('../')
+
+from waterYearSamplesInfrastructure import FractionatedSIPSample
 
 EXCEL_LOCATION = './data/fractionation/'
 SAMPLE_METADATA = '../all_samples.csv'
