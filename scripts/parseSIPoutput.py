@@ -11,7 +11,7 @@ from typing import List
 from math import ceil
 
 #So that tests run from the root directory
-sys.path.append('../')
+sys.path.append('./scripts/')
 
 from waterYearSamplesInfrastructure import FractionatedSIPSample
 
