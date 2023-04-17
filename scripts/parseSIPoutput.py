@@ -11,7 +11,7 @@ from itertools import combinations
 from typing import List
 from math import ceil
 
-from waterYearSamplesInfrastructure import FractionatedSIPSample
+from scripts.waterYearSamplesInfrastructure import FractionatedSIPSample
 
 EXCEL_LOCATION = './data/fractionation/'
 SAMPLE_METADATA = '../all_samples.csv'
@@ -33,8 +33,12 @@ def extract_fractionation_samples_from_excel_files(EXCEL_LOCATION):
             continue
         data = pd.read_excel(EXCEL_LOCATION+file, 'Summary')
         toc = pd.read_excel(EXCEL_LOCATION+file, 'Table of Contents', header=3)
+
+        #Get the column name from toc.columns starting with 'Final Volume'
+        res = [key for key in toc.columns if 'Final Volume' in key]
+        volName = res[0]
         for dbID, plate, tube, dna_yield, wells_volume in zip(toc['Sample ID'], toc['Plate Label'], 
-            toc['Tube Letter'], toc['Percent DNA Recovered'], toc['Final Volume (ul)']):
+            toc['Tube Letter'], toc['Percent DNA Recovered'], toc[volName]):
             if np.isnan(dbID):
                 break
             if dbID not in samples:
