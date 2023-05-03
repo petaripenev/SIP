@@ -168,7 +168,7 @@ def splitsum(L,S):
         r.append(v)
     return result
 
-def splitFractions(sampleList, targetDNA=100):
+def mergeFractions(sampleList, targetDNA=100):
     for sample in sampleList:
         heavy_chunk = splitsum(sample.remainingDNAperFraction, targetDNA)[0]
         light_chunk = splitsum(sample.remainingDNAperFraction[::-1], targetDNA)[0]
@@ -275,6 +275,15 @@ def calculate_density_linear_regression(densities, plot=False):
 
     return slope, intercept, r_value, p_value, std_err
 
+def extract_heavy_samples(samples, isotope_string_to_match='_18O-'):
+    heavy_samples = list()
+    for sample in samples:
+        if isotope_string_to_match in str(sample) and sample.dna_yield > 10:
+            chunk_ixes = [len(x) for x in sample.chunked_fractions]
+            sample = chunkProperties(sample, chunk_ixes)
+            heavy_samples.append(sample)
+    return heavy_samples
+
 def main(commandline_arguments):
 
     args = parse_args(commandline_arguments)
@@ -345,19 +354,15 @@ def main(commandline_arguments):
         sys.exit(0)
 
     #Binning first pass
-    samples = splitFractions(fractionation_samples, targetDNA=args.target_dna)
-    iso18Osamples = list()
-    for sample in samples:
-        if '_18O-' in str(sample) and sample.dna_yield > 10:
-            chunk_ixes = [len(x) for x in sample.chunked_fractions]
-            sample = chunkProperties(sample, chunk_ixes)
-            iso18Osamples.append(sample)
+    iso18Osamples = extract_heavy_samples(fractionation_samples)
+    binned_18O_Samples = mergeFractions(iso18Osamples, targetDNA=args.target_dna)
+    
 
     #Binning second pass
-    improve_SIP_bins(iso18Osamples)
+    improve_SIP_bins(binned_18O_Samples)
 
     #Bin output
-    for sample in iso18Osamples:
+    for sample in binned_18O_Samples:
         chunk_ixes = [len(x) for x in sample.chunked_densities]
         sample = chunkProperties(sample, chunk_ixes)
         # print(f'{str(sample)}\t','\t'.join([' '.join(x) for x in sample.chunked_wells]))
