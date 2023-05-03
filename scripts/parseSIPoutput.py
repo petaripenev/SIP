@@ -10,12 +10,14 @@ from itertools import combinations
 from typing import List
 from math import ceil
 
+from scipy.stats import linregress
+
 #So that tests run from the root directory
 sys.path.append('./scripts/')
 
 from waterYearSamplesInfrastructure import FractionatedSIPSample
 
-EXCEL_LOCATION = './data/fractionation/'
+EXCEL_LOCATION = './data/fractionation/test_fract_adjust/'
 SAMPLE_METADATA = '../all_samples.csv'
 
 def parse_args(argument_list):
@@ -25,6 +27,7 @@ def parse_args(argument_list):
     parser.add_argument('-o', '--output', help='Output folder for plots.', default='./figures/')
     parser.add_argument('-d', '--target_dna', help='Target DNA amount in ng for binned fractions.', default=100, type=int)
     parser.add_argument('-b', '--bins', help='Calculate fractionation bins and save to CSV file.', action='store_true')
+    parser.add_argument('-l', '--linear_fix', help='Fix densities using linear regression.', action='store_true')
     return parser.parse_args(argument_list)
 
 def extract_fractionation_samples_from_excel_files(EXCEL_LOCATION):
@@ -218,26 +221,26 @@ def plotFractionationDataByIsotope(fr_samples16O, fr_samples18O=None):
     else:
         fig, axs = plt.subplots(1, 1, sharex=True, sharey=True, figsize=(20,20))
         axs = [axs]
-    cmap160 = cm.get_cmap('tab20', len(set([f'{x.batch}-{x.plate}' for x in fr_samples16O])))
+    cmap160 = cm.get_cmap('tab20', len(set([x.batch for x in fr_samples16O])))
     #make the colormap a named dictionary with keys batch and plate and values the color
     named_cmap16O = dict()
-    for color, batch_plate in zip(cmap160.colors, set([f'{x.batch}-{x.plate}' for x in fr_samples16O])):
+    for color, batch_plate in zip(cmap160.colors, set([x.batch for x in fr_samples16O])):
         named_cmap16O[batch_plate] = color
 
     if fr_samples18O is not None:
-        cmap18O = cm.get_cmap('tab20', len(set([f'{x.batch}-{x.plate}' for x in fr_samples18O])))
+        cmap18O = cm.get_cmap('tab20', len(set([x.batch for x in fr_samples18O])))
         named_cmap18O = dict()
-        for color, batch_plate in zip(cmap18O.colors, set([f'{x.batch}-{x.plate}' for x in fr_samples18O])):
+        for color, batch_plate in zip(cmap18O.colors, set([x.batch for x in fr_samples18O])):
             named_cmap18O[batch_plate] = color
         for i, fr_sample in enumerate(fr_samples18O):
             axs[1].plot(fr_sample.densities, fr_sample.concentrations, 
-                        color=named_cmap18O[f'{fr_sample.batch}-{fr_sample.plate}'], label=f'{fr_sample.id}-{fr_sample.batch}: {fr_sample.weighted_mean_density:.3f}')
+                        color=named_cmap18O[fr_sample.batch], label=f'{fr_sample.id}-{fr_sample.batch}: {fr_sample.weighted_mean_density:.3f}')
         lgd2 = axs[1].legend(loc='center left', bbox_to_anchor=(1, 0.5))
         axs[1].set_title('18O')
 
     for i, fr_sample in enumerate(fr_samples16O):
         axs[0].plot(fr_sample.densities, fr_sample.concentrations, 
-                    color=named_cmap16O[f'{fr_sample.batch}-{fr_sample.plate}'], label=f'{fr_sample.id}-{fr_sample.dna_yield:.1f}: {fr_sample.weighted_mean_density:.3f}')
+                    color=named_cmap16O[fr_sample.batch], label=f'{fr_sample.id}-{fr_sample.batch}: {fr_sample.weighted_mean_density:.3f}')
     lgd = axs[0].legend(loc='center left', bbox_to_anchor=(1, 0.5))
     axs[0].set_title('16O')
    
@@ -245,11 +248,32 @@ def plotFractionationDataByIsotope(fr_samples16O, fr_samples18O=None):
         ax.set_xlim(1.65, 1.77)
         ax.set(xlabel='density (g/ml)', ylabel='DNA (ng/ul)')
     plt.tight_layout()
-    plt.savefig('figures/fractionation_data_both.png', dpi=300)
+    plt.savefig('figures/fractionation_data_both_fixed.png', dpi=300)
     plt.cla()
     plt.clf()
     return True
 
+def calculate_density_linear_regression(densities, plot=False):
+    '''Fit a line through the lists of densities, each list being an independent linear regression'''
+    data = np.array(densities)
+    y = data.flatten()
+    x_axis = np.linspace(1, len(densities[0]), len(densities[0]))
+    x = [x_axis] * len(densities)
+    x = np.array(x).flatten()
+    slope, intercept, r_value, p_value, std_err = linregress(x, y)
+
+    if plot:
+        colors = np.repeat(np.arange(len(densities)), len(densities[0]))
+        plt.scatter(x, y, c=colors, cmap='viridis')
+        plt.plot(x, slope*x + intercept, color='black')
+        plt.xlabel('Well Number')
+        plt.ylabel('Density')
+        plt.title('Linear Regression of Multiple Sets of Linear Data')
+        plt.savefig('figures/linear_regression.png', dpi=300)
+        plt.cla()
+        plt.clf()
+
+    return slope, intercept, r_value, p_value, std_err
 
 def main(commandline_arguments):
 
@@ -266,12 +290,28 @@ def main(commandline_arguments):
     fr_samples_16O = [item for item in fractionation_samples if item.experiment == '16O-7']
     fr_samples_18O = [item for item in fractionation_samples if item.experiment == '18O-7']
 
+    if args.linear_fix:
+        good_16O_densities = list()
+        for sample in fr_samples_16O:
+            if sample.batch == '144':
+                continue
+            if sample.batch == '135' and sample.plate == 'IJKL':
+                continue
+            good_16O_densities.append(sample.densities[:-2])
+
+        slope, intercept, r_value, p_value, std_err = calculate_density_linear_regression(good_16O_densities, plot=True)
+
+        bad_16O_samples = [x for x in fr_samples_16O if x.batch == '144' or x.batch == '135']
+        for sample in bad_16O_samples:
+            bad_slope, bad_intercept, bad_r_value, bad_p_value, bad_std_err = calculate_density_linear_regression([sample.densities[:-2]])
+            print(f'{sample.id}, {sample.batch}, {sample.plate} Slope difference: {slope-bad_slope} Intercept difference: {intercept-bad_intercept}')
+
     #Plot fractionation data by isotope
     plotFractionationDataByIsotope(fr_samples_16O, fr_samples_18O)
 
 
     #Plotting
-    fig, axs = plt.subplots(7, int(ceil(len(isotopePairs)/7)), sharex=True, sharey=True, figsize=(30,20))
+    fig, axs = plt.subplots(7, int(ceil(len(isotopePairs)/7)), sharex=True, sharey=True, figsize=(40,30))
 
     print("Unpaired samples:")
     for sample in unpairedSamples:
@@ -299,7 +339,7 @@ def main(commandline_arguments):
 
     plt.tight_layout()
     plt.plot()
-    plt.savefig('figures/all_samples_v3.svg', dpi=300)
+    plt.savefig('figures/all_samples_v5_fixed.svg', dpi=300)
 
     if not args.bins:
         sys.exit(0)
@@ -330,7 +370,7 @@ def main(commandline_arguments):
         #print(f'{str(sample)}\t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
 
         #Print only the min max density for each chunk
-        print(f'{str(sample)}\t','\t'.join([f'{max(x):.3f}\t{min(x):.3f}' for x in sample.chunked_densities]))
+        print(f'{str(sample)}\t','\t'.join([f'{max(x):.4f}\t{min(x):.4f}' for x in sample.chunked_densities]))
 
 if __name__ == '__main__':
     main(sys.argv[1:])

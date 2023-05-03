@@ -53,6 +53,9 @@ class WaterYearSample:
 @dataclass
 class DNAextractionSample(WaterYearSample):
     experiment: str
+    soil_wet_weight_gr: float = field(default=None, init=False, metadata={'property': 'Weight (gr)'})
+    soil_dried_weight_gr: float = field(default=None, init=False, metadata={'property': 'Weight dried (gr)'})
+    water_added_ml: float = field(default=None, init=False, metadata={'property': 'H2O amount (ml)'})
     grams_soil_extracted: float = field(default=None, init=False, metadata={'property': 'Soil for DNA extraction (gr)'})
     concentration_DNA_extracted: float = field(default=None, init=False, metadata={'property': 'DNA concentration (ng/ul)'})
     total_ul_DNA_extracted: float = field(default=None, init=False, metadata={'property': 'Volume DNA extraction (ul)'})
