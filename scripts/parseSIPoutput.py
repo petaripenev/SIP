@@ -126,7 +126,8 @@ def plotGraph(sample18, ax, title, sample16=None):
         ax.axvline(x = mean16, color = 'b',  alpha=0.5, label = '16O')
         ax.axvline(x = mean18, color = 'r', alpha=0.5, label = '18O')
         ax.plot(density18, conc18, 'r-')
-        return True
+        if not hasattr(sample18, 'chunked_denities'):
+            return True
     cm = plt.get_cmap('Dark2')
     for i,(x,y) in enumerate(zip(sample18.chunked_densities,sample18.chunked_concentrations)):
         if i+1 < len(sample18.chunked_densities):
@@ -168,12 +169,21 @@ def splitsum(L,S):
         r.append(v)
     return result
 
+def extract_heavy_samples(samples, isotope_string_to_match='_18O-'):
+    heavy_samples = list()
+    for sample in samples:
+        if isotope_string_to_match in str(sample) and sample.dna_yield > 10:
+            heavy_samples.append(sample)
+    return heavy_samples
+
 def mergeFractions(sampleList, targetDNA=100):
     for sample in sampleList:
         heavy_chunk = splitsum(sample.remainingDNAperFraction, targetDNA)[0]
         light_chunk = splitsum(sample.remainingDNAperFraction[::-1], targetDNA)[0]
         mid_chunks = splitsum(sample.remainingDNAperFraction[len(heavy_chunk):-len(light_chunk)], targetDNA)
         sample.chunked_fractions = [heavy_chunk,*mid_chunks,light_chunk[::-1]]
+        chunk_ixes = [len(x) for x in sample.chunked_fractions]
+        sample = chunkProperties(sample, chunk_ixes)
         # chunks = splitsum(sample.remainingDNAperFraction, targetDNA)
         # sample.chunked_fractions = chunks
     return sampleList
@@ -253,6 +263,31 @@ def plotFractionationDataByIsotope(fr_samples16O, fr_samples18O=None):
     plt.clf()
     return True
 
+def plotAllSampleCurves(isotopePairs, loc='figures/all_samples_v5_fixed.svg'):
+    fig, axs = plt.subplots(7, int(ceil(len(isotopePairs)/7)), sharex=True, sharey=True, figsize=(40,30))
+    for isotope_pair, axis in zip(isotopePairs, axs.flatten()):
+        iso16O = isotope_pair[0]
+        iso18O = isotope_pair[1]
+        isotope_shift = iso18O.weighted_mean_density-iso16O.weighted_mean_density
+        atomPCTenrichment = calcAtomPCT(iso16O.weighted_mean_density, isotope_shift)
+        print(f'{str(iso16O)} ape: {atomPCTenrichment:.2f}%')
+        plotGraph(iso18O, 
+                  axis, 
+                  f'{str(iso16O)[:6]}({iso16O.id}:{iso16O.dna_yield:.0f},{iso18O.id}:{iso18O.dna_yield:.0f}){atomPCTenrichment:.2f}',
+                  sample16=iso16O)
+
+    for ax in axs.flat:
+        ax.set_xlim(1.65, 1.77)
+        ax.set(xlabel='density (g/ml)', ylabel='DNA (ng/ul)')
+
+    for ax in axs.flat:
+       ax.label_outer()
+
+    plt.tight_layout()
+    plt.plot()
+    plt.savefig(loc, dpi=300)
+    return True
+
 def calculate_density_linear_regression(densities, plot=False):
     '''Fit a line through the lists of densities, each list being an independent linear regression'''
     data = np.array(densities)
@@ -274,15 +309,6 @@ def calculate_density_linear_regression(densities, plot=False):
         plt.clf()
 
     return slope, intercept, r_value, p_value, std_err
-
-def extract_heavy_samples(samples, isotope_string_to_match='_18O-'):
-    heavy_samples = list()
-    for sample in samples:
-        if isotope_string_to_match in str(sample) and sample.dna_yield > 10:
-            chunk_ixes = [len(x) for x in sample.chunked_fractions]
-            sample = chunkProperties(sample, chunk_ixes)
-            heavy_samples.append(sample)
-    return heavy_samples
 
 def main(commandline_arguments):
 
@@ -318,39 +344,12 @@ def main(commandline_arguments):
     #Plot fractionation data by isotope
     plotFractionationDataByIsotope(fr_samples_16O, fr_samples_18O)
 
-
-    #Plotting
-    fig, axs = plt.subplots(7, int(ceil(len(isotopePairs)/7)), sharex=True, sharey=True, figsize=(40,30))
-
     print("Unpaired samples:")
     for sample in unpairedSamples:
         print(str(sample), sample.id)
-
-
-    for isotope_pair, axis in zip(isotopePairs, axs.flatten()):
-
-        iso16O = isotope_pair[0]
-        iso18O = isotope_pair[1]
-        isotope_shift = iso18O.weighted_mean_density-iso16O.weighted_mean_density
-        atomPCTenrichment = calcAtomPCT(iso16O.weighted_mean_density, isotope_shift)
-        print(f'{str(iso16O)} ape: {atomPCTenrichment:.2f}%')
-        plotGraph(iso18O, 
-                  axis, 
-                  f'{str(iso16O)[:6]}({iso16O.id}:{iso16O.dna_yield:.0f},{iso18O.id}:{iso18O.dna_yield:.0f}){atomPCTenrichment:.2f}',
-                  sample16=iso16O)
-
-    for ax in axs.flat:
-        ax.set_xlim(1.65, 1.77)
-        ax.set(xlabel='density (g/ml)', ylabel='DNA (ng/ul)')
-
-    for ax in axs.flat:
-       ax.label_outer()
-
-    plt.tight_layout()
-    plt.plot()
-    plt.savefig('figures/all_samples_v5_fixed.svg', dpi=300)
-
+    
     if not args.bins:
+        plotAllSampleCurves(isotopePairs)
         sys.exit(0)
 
     #Binning first pass
@@ -376,6 +375,7 @@ def main(commandline_arguments):
 
         #Print only the min max density for each chunk
         print(f'{str(sample)}\t','\t'.join([f'{max(x):.4f}\t{min(x):.4f}' for x in sample.chunked_densities]))
+    plotAllSampleCurves(isotopePairs, 'figures/all_samples_bins_v5_fixes.svg')
 
 if __name__ == '__main__':
     main(sys.argv[1:])
