@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug binning",
+            "type": "python",
+            "request": "launch",
+            "program": "./scripts/parseSIPoutput.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [ "-b", "-d", "80" ]
+        },
+        {
             "type": "R-Debugger",
             "name": "Debug R-File",
             "request": "launch",

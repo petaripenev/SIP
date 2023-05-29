@@ -110,7 +110,7 @@ def calcAtomPCT(wm16, isotopeShift):
     delM = m18-m16
     m18Max = 12.07747+m16
     atomPCTconst = 1-0.002000429
-    return 100*((m18-m16)/(m18Max-m16))*atomPCTconst
+    return 100*((delM)/(m18Max-m16))*atomPCTconst
 
 def plotGraph(sample18, ax, title, sample16=None):
 
@@ -126,7 +126,7 @@ def plotGraph(sample18, ax, title, sample16=None):
         ax.axvline(x = mean16, color = 'b',  alpha=0.5, label = '16O')
         ax.axvline(x = mean18, color = 'r', alpha=0.5, label = '18O')
         ax.plot(density18, conc18, 'r-')
-        if not hasattr(sample18, 'chunked_denities'):
+        if not hasattr(sample18, 'chunked_densities'):
             return True
     cm = plt.get_cmap('Dark2')
     for i,(x,y) in enumerate(zip(sample18.chunked_densities,sample18.chunked_concentrations)):
@@ -160,6 +160,7 @@ def lindexsplit(some_list, *args):
     return my_list
 
 def splitsum(L,S):
+    '''Splits a list of numbers into sublists whose sums are just about bigger than S'''
     result,t = [[]],0
     for n in L:
         if t>S:
@@ -374,7 +375,9 @@ def main(commandline_arguments):
         #print(f'{str(sample)}\t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
 
         #Print only the min max density for each chunk
-        print(f'{str(sample)}\t','\t'.join([f'{max(x):.4f}\t{min(x):.4f}' for x in sample.chunked_densities]))
+        #print(f'{str(sample)}\t','\t'.join(['-'.join(x) for x in sample.chunked_wells]))
+        print(f'{str(sample)}\t','\t'.join([f'{max(x):.4f}-{min(x):.4f}' for x in sample.chunked_densities]))
+        #print(f'{str(sample)}\t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
     plotAllSampleCurves(isotopePairs, 'figures/all_samples_bins_v5_fixes.svg')
 
 if __name__ == '__main__':
