@@ -1,6 +1,6 @@
 import unittest
 from scripts.parseSIPoutput import extract_fractionation_samples_from_excel_files, build_sample_objects, findIsotopePairs
-from scripts.parseSIPoutput import calcAtomPCT, lindexsplit, splitsum, extract_heavy_samples, mergeFractions, chunkProperties, improve_SIP_bins
+from scripts.parseSIPoutput import calcAtomPCT, lindexsplit, splitsum, extract_heavy_samples, mergeFractions, improve_SIP_bins
 from scripts.parseSIPoutput import SAMPLE_METADATA
 
 class TestParseSIPoutput(unittest.TestCase):
@@ -84,11 +84,21 @@ class TestParseSIPoutput(unittest.TestCase):
         self.assertTrue(hasattr(binned_samples[0], 'chunked_concentrations'))
         self.assertEqual(len(binned_samples[0].chunked_concentrations), 8)
         self.assertEqual(len(binned_samples[0].chunked_concentrations[0]), 5)
+        self.assertEqual(len(binned_samples[0].chunked_wells[0]), 5)
         binned_samples = mergeFractions(iso18Osamples, targetDNA=100)
         self.assertEqual(len(binned_samples[0].chunked_concentrations), 8)
         self.assertEqual(len(binned_samples[0].chunked_concentrations[0]), 6)
+        self.assertEqual(len(binned_samples[0].chunked_wells[0]), 6)
 
-
+    def testimprove_SIP_bins(self):
+        paired_fractionation_samples = self.sample_objects
+        iso18Osamples = extract_heavy_samples(paired_fractionation_samples)
+        binned_samples = mergeFractions(iso18Osamples, targetDNA=80)
+        self.assertEqual(len(binned_samples[4].chunked_densities), 8)
+        self.assertEqual(len(binned_samples[4].chunked_densities[0]), 6)
+        improve_SIP_bins(binned_samples)
+        self.assertEqual(len(binned_samples[4].chunked_densities), 5)
+        self.assertEqual(len(binned_samples[4].chunked_densities[0]), 7)
 
 if __name__ == '__main__':
     unittest.main()
