@@ -1,3 +1,4 @@
 *.pyc
 processing/rScript/*
 .coverage
+*desktop.ini*
