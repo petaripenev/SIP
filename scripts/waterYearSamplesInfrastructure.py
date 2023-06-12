@@ -95,5 +95,34 @@ class FractionatedSIPSample(DNAextractionSample):
 
     def __repr__(self):
         return f"{self.sampling_site}{self.replicate}{self.sampling_week}_{self.depth_str}_{self.experiment}"
+    
+    def removeFractionsBelowDensityCutoff(self, cutoff):
+        '''Remove fractions with density below cutoff'''
+        self.concentrations = [conc for conc,dens in zip(self.concentrations, self.densities) if dens >= cutoff]
+        self.wells = [well for well,dens in zip(self.wells, self.densities) if dens >= cutoff]
+        self.fraction_volumes = [vol for vol,dens in zip(self.fraction_volumes, self.densities) if dens >= cutoff]
+        self.remainingDNAperFraction = [((abs(conc)+conc)/2)*vol for conc,vol in zip(self.concentrations, self.fraction_volumes)]
+        self.area = [a*b for a,b in zip(self.densities,self.concentrations)]
+        self.weighted_mean_density = sum(self.area)/sum(self.concentrations)
+        self.densities = [dens for dens in self.densities if dens >= cutoff]
 
+    def removeFractionsAboveDensityCutoff(self, cutoff):
+        '''Remove fractions with density above cutoff'''
+        self.concentrations = [conc for conc,dens in zip(self.concentrations, self.densities) if dens <= cutoff]
+        self.wells = [well for well,dens in zip(self.wells, self.densities) if dens <= cutoff]
+        self.fraction_volumes = [vol for vol,dens in zip(self.fraction_volumes, self.densities) if dens <= cutoff]
+        self.remainingDNAperFraction = [((abs(conc)+conc)/2)*vol for conc,vol in zip(self.concentrations, self.fraction_volumes)]
+        self.area = [a*b for a,b in zip(self.densities,self.concentrations)]
+        self.weighted_mean_density = sum(self.area)/sum(self.concentrations)
+        self.densities = [dens for dens in self.densities if dens <= cutoff]
+
+    def removeFractionsBelowDNACutoff(self, cutoff):
+        '''Remove fractions without DNA'''
+        self.concentrations = [conc for conc,dna in zip(self.concentrations, self.remainingDNAperFraction) if dna > cutoff]
+        self.densities = [dens for dens,dna in zip(self.densities, self.remainingDNAperFraction) if dna > cutoff]
+        self.wells = [well for well,dna in zip(self.wells, self.remainingDNAperFraction) if dna > cutoff]
+        self.fraction_volumes = [vol for vol,dna in zip(self.fraction_volumes, self.remainingDNAperFraction) if dna > cutoff]
+        self.area = [a*b for a,b in zip(self.densities,self.concentrations)]
+        self.weighted_mean_density = sum(self.area)/sum(self.concentrations)
+        self.remainingDNAperFraction = [dna for dna in self.remainingDNAperFraction if dna > cutoff]
 

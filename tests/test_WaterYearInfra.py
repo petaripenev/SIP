@@ -89,7 +89,7 @@ class TestDNAextractionSample(unittest.TestCase):
             DNAextractionSample(1,'H', 'B', '1', (20, 30), 'D3',
                 '2020-01-01', './data/metadata/all_samples.csv', '16O-7')
         self.assertTrue('Property GWC % is empty in metadata file at row HB1_D3_GSC!'
-                            in str(context.warning))
+                            in context.warning.args[0])
 
     def testGet_experiment_property(self):
         s1 = DNAextractionSample(1,'A', 'C', '4', (50, 80), 'D5', '2022-05-19', './data/metadata/all_samples.csv', '18O-30')

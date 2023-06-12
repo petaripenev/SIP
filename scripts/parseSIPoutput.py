@@ -27,6 +27,7 @@ def parse_args(argument_list):
     parser.add_argument('-o', '--output', help='Output folder for plots.', default='./figures/')
     parser.add_argument('-d', '--target_dna', help='Target DNA amount in ng for binned fractions.', default=100, type=int)
     parser.add_argument('-b', '--bins', help='Calculate fractionation bins and save to CSV file.', action='store_true')
+    parser.add_argument('-c', '--cutoff', help='Cutoff for fractionation bins.', default=1.64, type=float)
     parser.add_argument('-l', '--linear_fix', help='Fix densities using linear regression.', action='store_true')
     return parser.parse_args(argument_list)
 
@@ -84,7 +85,7 @@ def build_sample_objects(metadata_file, samples):
                 dna_yield = samples[db_id][2],
                 wells = samples[db_id][3],
                 densities = samples[db_id][4],
-                concentrations = samples[db_id][5],
+                concentrations = [(abs(x)+x)/2 for x in samples[db_id][5]],
                 fraction_volumes = samples[db_id][6],
             )
             current_sample.batch = samples[db_id][7]
@@ -213,7 +214,7 @@ def improve_SIP_bins(sampleList, passThrough=0):
         if passThrough+1 >= len(sample.chunked_densities):
             continue
         for i,density in enumerate(sample.chunked_densities[passThrough+1]):
-            if density > lowestFractionFromSet:
+            if density >= lowestFractionFromSet:
                 modifiedChunks = True
                 sample.chunked_densities[passThrough].append(density)
                 remove_indices.append(i)
@@ -224,6 +225,29 @@ def improve_SIP_bins(sampleList, passThrough=0):
         improve_SIP_bins(sampleList, passThrough=passThrough)
     else:
         improve_SIP_bins(sampleList, passThrough=passThrough+1)
+
+def merge_lightest_bins(sample):
+    '''Merge the two lightest chunks into one'''
+    sample.chunked_densities[-2] = sample.chunked_densities[-2] + sample.chunked_densities[-1]
+    sample.chunked_densities = sample.chunked_densities[:-1]
+    sample.chunked_concentrations[-2] = sample.chunked_concentrations[-2] + sample.chunked_concentrations[-1]
+    sample.chunked_concentrations = sample.chunked_concentrations[:-1]
+    sample.chunked_fractions[-2] = sample.chunked_fractions[-2] + sample.chunked_fractions[-1]
+    sample.chunked_fractions = sample.chunked_fractions[:-1]
+    sample.chunked_wells[-2] = sample.chunked_wells[-2] + sample.chunked_wells[-1]
+    sample.chunked_wells = sample.chunked_wells[:-1]
+    return sample
+
+def identify_density_thresholds_between_bins(sampleList):
+    '''Identify the density thresholds between bins'''
+    max_min_densities = list()
+    for sample in sampleList:
+        max_min_densities.append([[max(x),min(x)] for x in sample.chunked_densities])
+    
+    #Identify the minimum and maximum densities across all samples
+    max_min_densities = list(zip(*max_min_densities))
+    threshold_densities = [np.average([max(list(zip(*x))[0]),min(list(zip(*x))[1])]) for x in max_min_densities]
+    return threshold_densities
 
 def plotFractionationDataByIsotope(fr_samples16O, fr_samples18O=None):
     #Plot the fractionation data by isotope pair
@@ -264,14 +288,14 @@ def plotFractionationDataByIsotope(fr_samples16O, fr_samples18O=None):
     plt.clf()
     return True
 
-def plotAllSampleCurves(isotopePairs, loc='figures/all_samples_v5_fixed.svg'):
+def plotAllSampleCurves(isotopePairs, loc='figures/all_samples_v6_fixed.svg'):
     fig, axs = plt.subplots(7, int(ceil(len(isotopePairs)/7)), sharex=True, sharey=True, figsize=(40,30))
     for isotope_pair, axis in zip(isotopePairs, axs.flatten()):
         iso16O = isotope_pair[0]
         iso18O = isotope_pair[1]
         isotope_shift = iso18O.weighted_mean_density-iso16O.weighted_mean_density
         atomPCTenrichment = calcAtomPCT(iso16O.weighted_mean_density, isotope_shift)
-        print(f'{str(iso16O)} ape: {atomPCTenrichment:.2f}%')
+        #print(f'{str(iso16O)} ape: {atomPCTenrichment:.2f}%')
         plotGraph(iso18O, 
                   axis, 
                   f'{str(iso16O)[:6]}({iso16O.id}:{iso16O.dna_yield:.0f},{iso18O.id}:{iso18O.dna_yield:.0f}){atomPCTenrichment:.2f}',
@@ -310,6 +334,13 @@ def calculate_density_linear_regression(densities, plot=False):
         plt.clf()
 
     return slope, intercept, r_value, p_value, std_err
+
+def binLightSample(light_sample:FractionatedSIPSample, thresholds:list):
+    '''Chunk the properties of the light sample based on density thresholds'''
+    chunked_densities = list(np.split(light_sample.densities,np.searchsorted(-np.array(light_sample.densities), -np.array(thresholds))))[1:]
+    chunk_ixes = [len(x) for x in chunked_densities]
+    light_sample = chunkProperties(light_sample, chunk_ixes)
+    return light_sample
 
 def main(commandline_arguments):
 
@@ -353,6 +384,11 @@ def main(commandline_arguments):
         plotAllSampleCurves(isotopePairs)
         sys.exit(0)
 
+    # Remove fractions below the cutoff threshold
+    for sample in fractionation_samples:
+        sample.removeFractionsBelowDensityCutoff(args.cutoff)
+        sample.removeFractionsBelowDNACutoff(10)
+
     #Binning first pass
     iso18Osamples = extract_heavy_samples(fractionation_samples)
     binned_18O_Samples = mergeFractions(iso18Osamples, targetDNA=args.target_dna)
@@ -361,10 +397,28 @@ def main(commandline_arguments):
     #Binning second pass
     improve_SIP_bins(binned_18O_Samples)
 
-    #Bin output
+    #Merge lightest fraction bins if bin number is above 5
+    for sample in binned_18O_Samples:
+        if len(sample.chunked_densities) > 5:
+            sample = merge_lightest_bins(sample)
+
+    isotopePairs = findIsotopePairs(fractionation_samples)
+
+    
+
+    #Rechunk after bin improvements
     for sample in binned_18O_Samples:
         chunk_ixes = [len(x) for x in sample.chunked_densities]
         sample = chunkProperties(sample, chunk_ixes)
+
+    #Bin the light samples based on the heavy samples
+    heavy_density_thresholds = identify_density_thresholds_between_bins(binned_18O_Samples)
+    for sample16, sample18 in isotopePairs:
+        sample16 = binLightSample(sample16, heavy_density_thresholds)
+        print(f'{str(sample16)}\t','\t'.join(['-'.join([f'{y:.3f}' for y in x]) for x in sample16.chunked_fractions]))
+
+    #Bin output
+    #for sample in binned_18O_Samples:
         # print(f'{str(sample)}\t','\t'.join([' '.join(x) for x in sample.chunked_wells]))
         # print(f'{str(sample)}\t','\t'.join([' '.join([f'{y:.3f}' for y in x]) for x in sample.chunked_densities]))
         # print(f'{str(sample)}\t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
@@ -376,9 +430,15 @@ def main(commandline_arguments):
 
         #Print only the min max density for each chunk
         #print(f'{str(sample)}\t','\t'.join(['-'.join(x) for x in sample.chunked_wells]))
-        print(f'{str(sample)}\t','\t'.join([f'{max(x):.4f}-{min(x):.4f}' for x in sample.chunked_densities]))
+        #print(f'{str(sample)}\t','\t'.join([f'{max(x):.4f} {min(x):.4f}' for x in sample.chunked_densities]))
+        #print('\t\t', '\t'.join([f'{sum(x):.4f}' for x in sample.chunked_fractions]))
+        #print('\t\t', '\t'.join([f'{np.average(x):.4f}' for x in sample.chunked_concentrations]))
+        #print('\t\t', '\t'.join([f'{np.average(x):.4f}' for x in sample.chunked_densities]))
+        #print('\t\t', '\t'.join([f'{float(sum(x)/(len(x)*37)):.4f}' for x in sample.chunked_fractions]))
+        #print('\t\t', '\t'.join(['-'.join(f'{y:.1f}' for y in x) for x in sample.chunked_fractions]))
+        #print('\t\t', '\t'.join(['-'.join(f'{y:.1f}' for y in x) for x in sample.chunked_concentrations]))
         #print(f'{str(sample)}\t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
-    plotAllSampleCurves(isotopePairs, 'figures/all_samples_bins_v5_fixes.svg')
+    #plotAllSampleCurves(isotopePairs, 'figures/all_samples_bins_v5_fixes.svg')
 
 if __name__ == '__main__':
     main(sys.argv[1:])
