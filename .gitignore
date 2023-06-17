@@ -2,3 +2,4 @@
 processing/rScript/*
 .coverage
 *desktop.ini*
+*.docx

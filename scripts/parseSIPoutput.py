@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 
-import sys, csv, argparse
+import sys, csv, argparse, warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from os import listdir
 from itertools import combinations
-from typing import List
 from math import ceil
-
 from scipy.stats import linregress
 
 #So that tests run from the root directory
@@ -18,16 +16,20 @@ sys.path.append('./scripts/')
 from waterYearSamplesInfrastructure import FractionatedSIPSample
 
 EXCEL_LOCATION = './data/fractionation/test_fract_adjust/'
+PICO_LOCATION = './data/fractionation/Quant/'
 SAMPLE_METADATA = '../all_samples.csv'
 
 def parse_args(argument_list):
     parser = argparse.ArgumentParser(description='Parse SIP fractionation files, plot enrichment curves, and calculate fractionation bins.')
     parser.add_argument('-f', '--fractionation_files', help='Folder with fractionation output files in xlsx formtat.', default=EXCEL_LOCATION)
+    parser.add_argument('-p', '--pico_quantification_file', help='Folder with picogreen results in xlsx formtat.', default=PICO_LOCATION)
     parser.add_argument('-m', '--metadata_file', help='CSV file with sample metadata.', default=SAMPLE_METADATA)
     parser.add_argument('-o', '--output', help='Output folder for plots.', default='./figures/')
     parser.add_argument('-d', '--target_dna', help='Target DNA amount in ng for binned fractions.', default=100, type=int)
     parser.add_argument('-b', '--bins', help='Calculate fractionation bins and save to CSV file.', action='store_true')
-    parser.add_argument('-c', '--cutoff', help='Cutoff for fractionation bins.', default=1.64, type=float)
+    parser.add_argument('-lc', '--light_cutoff', help='Light density cutoff for fractionation wells.', default=1.62, type=float)
+    parser.add_argument('-hc', '--heavy_cutoff', help='Heavy density cutoff for fractionation wells.', default=1.76, type=float)
+    parser.add_argument('-dc', '--dna_cutoff', help='Total DNA amount cutoff for fractionation wells.', default=0, type=float)
     parser.add_argument('-l', '--linear_fix', help='Fix densities using linear regression.', action='store_true')
     return parser.parse_args(argument_list)
 
@@ -59,8 +61,25 @@ def extract_fractionation_samples_from_excel_files(EXCEL_LOCATION):
         raise ValueError("Duplicate samples found!")
     return samples
 
-def build_sample_objects(metadata_file, samples):
+def load_picogreen_quantification_data(PICO_LOCATION):
+    samples = dict()
+    for file in listdir(PICO_LOCATION):
+        if not file.endswith(".xlsx"):
+            continue
+        data = pd.read_excel(PICO_LOCATION+file, 'Consolidated')
+        batch, plate = file.split()[2].replace('batch',''), file.split()[3].replace('.xlsx','')
+        wells, ave_yields, stdevs = list(data['Fractionation well']), list(data['Average yield']), list(data['stdev'])
+        dna_wells = [wells[i * 22:(i + 1) * 22] for i in range((len(wells) + 22 - 1) // 22 )] 
+        dna_yields = [ave_yields[i * 22:(i + 1) * 22] for i in range((len(ave_yields) + 22 - 1) // 22 )] 
+        dna_stdevs = [stdevs[i * 22:(i + 1) * 22] for i in range((len(stdevs) + 22 - 1) // 22 )] 
+        if batch not in samples:
+            samples[batch] = {}
+        samples[batch] = {**samples[batch], **{plate: (dna_wells, dna_yields, dna_stdevs)}}
+    return samples
+
+def build_sample_objects(metadata_file, samples, picogreen_data):
     fractionation_samples = list()
+    tube_to_ix = {key: value for key, value in zip(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'],[0,1,2,3]*4)}
     with open(metadata_file, 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
@@ -69,6 +88,8 @@ def build_sample_objects(metadata_file, samples):
                 continue
             if row['sample_id'][-2:] == '30':
                 continue
+            if picogreen_data[samples[db_id][7]][samples[db_id][0]][0][tube_to_ix[samples[db_id][1]]][1:20] != samples[db_id][3]:
+                print(f"Mismatched wells for batch {samples[db_id][7]}, plate {samples[db_id][0]}, sample {db_id}!")
             current_sample = FractionatedSIPSample(
                 id = db_id,
                 sampling_site = row['location'][0],
@@ -88,7 +109,9 @@ def build_sample_objects(metadata_file, samples):
                 concentrations = [(abs(x)+x)/2 for x in samples[db_id][5]],
                 fraction_volumes = samples[db_id][6],
             )
+            current_sample.conc_stdevs = picogreen_data[samples[db_id][7]][samples[db_id][0]][2][tube_to_ix[samples[db_id][1]]][1:20]
             current_sample.batch = samples[db_id][7]
+            current_sample.extraction_id = row['Extraction ID']
             fractionation_samples.append(current_sample)
     return fractionation_samples
 
@@ -240,13 +263,16 @@ def merge_lightest_bins(sample):
 
 def identify_density_thresholds_between_bins(sampleList):
     '''Identify the density thresholds between bins'''
-    max_min_densities = list()
+    max_min_densities, threshold_densities = list(), list()
     for sample in sampleList:
         max_min_densities.append([[max(x),min(x)] for x in sample.chunked_densities])
     
     #Identify the minimum and maximum densities across all samples
     max_min_densities = list(zip(*max_min_densities))
-    threshold_densities = [np.average([max(list(zip(*x))[0]),min(list(zip(*x))[1])]) for x in max_min_densities]
+    range_densities = [([max(list(zip(*x))[0]),min(list(zip(*x))[1])]) for x in max_min_densities]
+    for i,x in enumerate(range_densities):
+        if i+1 < len(range_densities):
+            threshold_densities.append(np.average([x[1], range_densities[i+1][0]]))
     return threshold_densities
 
 def plotFractionationDataByIsotope(fr_samples16O, fr_samples18O=None):
@@ -337,10 +363,36 @@ def calculate_density_linear_regression(densities, plot=False):
 
 def binLightSample(light_sample:FractionatedSIPSample, thresholds:list):
     '''Chunk the properties of the light sample based on density thresholds'''
-    chunked_densities = list(np.split(light_sample.densities,np.searchsorted(-np.array(light_sample.densities), -np.array(thresholds))))[1:]
+    chunked_densities = list(np.split(light_sample.densities,np.searchsorted(-np.array(light_sample.densities), -np.array(thresholds))))
     chunk_ixes = [len(x) for x in chunked_densities]
     light_sample = chunkProperties(light_sample, chunk_ixes)
     return light_sample
+
+def print_wells_for_binning(isotopePairs):
+    '''Prints batch, plate and wells of the bins for each sample
+    and the name of the sample based on extraction id and fraction number'''
+    sampleList = list()
+    for isotope_pair in isotopePairs:
+        sampleList.append(isotope_pair[0])
+        sampleList.append(isotope_pair[1])
+    #Order samples by batch and plate
+    sampleList.sort(key=lambda x: (x.batch, x.plate))
+    dict_for_print = dict()
+    for sample in sampleList:
+        if sample.batch not in dict_for_print.keys():
+            dict_for_print[sample.batch] = dict()
+        if sample.plate not in dict_for_print[sample.batch].keys():
+            dict_for_print[sample.batch][sample.plate] = list()
+        dict_for_print[sample.batch][sample.plate].append(sample)
+    
+    for batch in sorted(dict_for_print.keys()):
+        print(f'Batch {batch}:')
+        for plate in sorted(dict_for_print[batch].keys()):
+            print(f'\tPlate {plate}:')
+            for sample in dict_for_print[batch][plate]:
+                print(f'\t\tOld ID {sample.id}')
+                for i, wells in enumerate(sample.chunked_wells):
+                    print(f'\t\t\t{sample.extraction_id}_{i+1}: {" ".join(wells)}')
 
 def main(commandline_arguments):
 
@@ -348,7 +400,26 @@ def main(commandline_arguments):
 
     samples = extract_fractionation_samples_from_excel_files(args.fractionation_files)
 
-    fractionation_samples = build_sample_objects(args.metadata_file, samples)
+    pico_quantification_stdevs = load_picogreen_quantification_data(args.pico_quantification_file)
+
+    fractionation_samples = build_sample_objects(args.metadata_file, samples, pico_quantification_stdevs)
+
+    #Print samples with high stdevs for the concentration measurements
+    #print('Samples with high stdevs for the concentration measurements:')
+    for sample in fractionation_samples:
+        well_conc_stdev = list(zip(sample.wells, sample.concentrations, sample.conc_stdevs))
+        well_conc_stdev_warn = [item for item in well_conc_stdev if item[2]*2 > item[1] and item[1] > 0.1]
+        well_conc_stdev_nill = [item for item in well_conc_stdev if item[2]*2 > item[1] and 0.1 > item[1] > 0]
+        for item in well_conc_stdev_warn:
+            print(f'{sample.id}-{sample.batch}-{sample.plate}-{item[0]}: {item[1]:.3f}+-{item[2]:.3f}')
+        for item in well_conc_stdev_nill:
+            #output warnings to a file
+            #with open('warnings.txt', 'a') as f:
+            #    f.write(f'Setting to 0: {sample.id}-{sample.batch}-{sample.plate}-{item[0]}: {item[1]:.3f}+-{item[2]:.3f}\n')
+            sample.concentrations[sample.wells.index(item[0])] = 0
+            sample.remainingDNAperFraction[sample.wells.index(item[0])] = 0
+            sample.area[sample.wells.index(item[0])] = 0
+
 
     #Find isotope pairs from the fractionation samples
     isotopePairs = findIsotopePairs(fractionation_samples)
@@ -376,9 +447,10 @@ def main(commandline_arguments):
     #Plot fractionation data by isotope
     plotFractionationDataByIsotope(fr_samples_16O, fr_samples_18O)
 
-    print("Unpaired samples:")
-    for sample in unpairedSamples:
-        print(str(sample), sample.id)
+    if len(unpairedSamples) > 0:
+        print("Unpaired samples:")
+        for sample in unpairedSamples:
+            print(str(sample), sample.id)
     
     if not args.bins:
         plotAllSampleCurves(isotopePairs)
@@ -386,8 +458,9 @@ def main(commandline_arguments):
 
     # Remove fractions below the cutoff threshold
     for sample in fractionation_samples:
-        sample.removeFractionsBelowDensityCutoff(args.cutoff)
-        sample.removeFractionsBelowDNACutoff(10)
+        sample.removeFractionsBelowDensityCutoff(args.light_cutoff)
+        sample.removeFractionsAboveDensityCutoff(args.heavy_cutoff)
+        #sample.removeFractionsBelowDNACutoff(args.dna_cutoff)
 
     #Binning first pass
     iso18Osamples = extract_heavy_samples(fractionation_samples)
@@ -404,8 +477,6 @@ def main(commandline_arguments):
 
     isotopePairs = findIsotopePairs(fractionation_samples)
 
-    
-
     #Rechunk after bin improvements
     for sample in binned_18O_Samples:
         chunk_ixes = [len(x) for x in sample.chunked_densities]
@@ -413,9 +484,25 @@ def main(commandline_arguments):
 
     #Bin the light samples based on the heavy samples
     heavy_density_thresholds = identify_density_thresholds_between_bins(binned_18O_Samples)
+    print('Density thresholds:\t'+'\t'.join([f'{x:.5f}' for x in heavy_density_thresholds]))
     for sample16, sample18 in isotopePairs:
         sample16 = binLightSample(sample16, heavy_density_thresholds)
-        print(f'{str(sample16)}\t','\t'.join(['-'.join([f'{y:.3f}' for y in x]) for x in sample16.chunked_fractions]))
+        conc_16O = ['-'.join([f'{y:.3f}' for y in x]) for x in sample16.chunked_concentrations]
+        conc_18O = ['-'.join([f'{y:.3f}' for y in x]) for x in sample18.chunked_concentrations]
+        dens_16O = [f'{max(x, default=0):.5f}:{min(x, default=0):.5f}' for x in sample16.chunked_densities]
+        #dens_16O = ['-'.join([f'{y}' for y in x]) for x in sample16.chunked_densities]
+        dens_18O = [f'{max(x, default=0):.5f}:{min(x, default=0):.5f}' for x in sample18.chunked_densities]
+        #dens_18O = ['-'.join([f'{y}' for y in x]) for x in sample18.chunked_densities]
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", category=RuntimeWarning)
+            average_conc_16O = [f'{np.average(x):.3f}' for x in sample16.chunked_concentrations]
+            average_conc_18O = [f'{np.average(x):.3f}' for x in sample18.chunked_concentrations]
+        bins_with_info_16O = ['_'.join(x) for x in list(zip(average_conc_16O, dens_16O, conc_16O))]
+        bins_with_info_18O = ['_'.join(x) for x in list(zip(average_conc_18O, dens_18O, conc_18O))]
+        #print(f'{str(sample16)}-{sample16.id}-{sample16.batch}-{sample16.plate}\t','\t'.join(bins_with_info_16O))
+        #print(f'{str(sample18)}-{sample18.id}-{sample18.batch}-{sample18.plate}\t','\t'.join(bins_with_info_18O))
+
+    print_wells_for_binning(isotopePairs)
 
     #Bin output
     #for sample in binned_18O_Samples:
@@ -438,7 +525,7 @@ def main(commandline_arguments):
         #print('\t\t', '\t'.join(['-'.join(f'{y:.1f}' for y in x) for x in sample.chunked_fractions]))
         #print('\t\t', '\t'.join(['-'.join(f'{y:.1f}' for y in x) for x in sample.chunked_concentrations]))
         #print(f'{str(sample)}\t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
-    #plotAllSampleCurves(isotopePairs, 'figures/all_samples_bins_v5_fixes.svg')
+    plotAllSampleCurves(isotopePairs, 'figures/all_samples_bins_v6_fixed.svg')
 
 if __name__ == '__main__':
     main(sys.argv[1:])
