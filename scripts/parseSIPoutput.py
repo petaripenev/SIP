@@ -77,19 +77,21 @@ def load_picogreen_quantification_data(PICO_LOCATION):
         samples[batch] = {**samples[batch], **{plate: (dna_wells, dna_yields, dna_stdevs)}}
     return samples
 
-def build_sample_objects(metadata_file, samples, picogreen_data):
+def build_sample_objects(metadata_file, samples, picogreen_data=False):
     fractionation_samples = list()
     tube_to_ix = {key: value for key, value in zip(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'],[0,1,2,3]*4)}
     with open(metadata_file, 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            db_id = int(row['id'])
+            db_id, pico_stdevs = int(row['id']), False
             if db_id not in samples.keys():
                 continue
             if row['sample_id'][-2:] == '30':
                 continue
-            if picogreen_data[samples[db_id][7]][samples[db_id][0]][0][tube_to_ix[samples[db_id][1]]][1:20] != samples[db_id][3]:
-                print(f"Mismatched wells for batch {samples[db_id][7]}, plate {samples[db_id][0]}, sample {db_id}!")
+            if picogreen_data and samples[db_id][7] in picogreen_data.keys():
+                pico_stdevs = picogreen_data[samples[db_id][7]][samples[db_id][0]][2][tube_to_ix[samples[db_id][1]]][1:20]
+                if picogreen_data[samples[db_id][7]][samples[db_id][0]][0][tube_to_ix[samples[db_id][1]]][1:20] != samples[db_id][3]:
+                    print(f"Mismatched wells for batch {samples[db_id][7]}, plate {samples[db_id][0]}, sample {db_id}!")
             current_sample = FractionatedSIPSample(
                 id = db_id,
                 sampling_site = row['location'][0],
@@ -109,7 +111,8 @@ def build_sample_objects(metadata_file, samples, picogreen_data):
                 concentrations = [(abs(x)+x)/2 for x in samples[db_id][5]],
                 fraction_volumes = samples[db_id][6],
             )
-            current_sample.conc_stdevs = picogreen_data[samples[db_id][7]][samples[db_id][0]][2][tube_to_ix[samples[db_id][1]]][1:20]
+            if pico_stdevs:
+                current_sample.conc_stdevs = pico_stdevs
             current_sample.batch = samples[db_id][7]
             current_sample.extraction_id = row['Extraction ID']
             fractionation_samples.append(current_sample)

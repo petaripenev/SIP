@@ -1,6 +1,7 @@
 import unittest
 from scripts.parseSIPoutput import extract_fractionation_samples_from_excel_files, build_sample_objects, findIsotopePairs
 from scripts.parseSIPoutput import calcAtomPCT, lindexsplit, splitsum, extract_heavy_samples, mergeFractions, improve_SIP_bins
+from scripts.parseSIPoutput import load_picogreen_quantification_data
 from scripts.parseSIPoutput import SAMPLE_METADATA
 
 class TestParseSIPoutput(unittest.TestCase):
@@ -10,8 +11,9 @@ class TestParseSIPoutput(unittest.TestCase):
     def setUpClass(cls):
         cls.fractionation_samples = extract_fractionation_samples_from_excel_files('./tests/test_data/read_files/')
         cls.paired_samples = extract_fractionation_samples_from_excel_files('./tests/test_data/paired_samples/')
-        cls.sample_objects = build_sample_objects(SAMPLE_METADATA ,cls.fractionation_samples)
-        cls.paired_sample_objects = build_sample_objects(SAMPLE_METADATA ,cls.paired_samples)
+        cls.picogreen_data = load_picogreen_quantification_data('./tests/test_data/pico_data/')
+        cls.sample_objects = build_sample_objects(SAMPLE_METADATA ,cls.fractionation_samples, cls.picogreen_data)
+        cls.paired_sample_objects = build_sample_objects(SAMPLE_METADATA ,cls.paired_samples, cls.picogreen_data)
 
     def testExtract_fractionation_samples_from_excel_files(self):
         # Test that the function can read the excel files
@@ -23,6 +25,12 @@ class TestParseSIPoutput(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             extract_fractionation_samples_from_excel_files('./tests/test_data/duplicate_samples/')
         self.assertTrue('Duplicate samples found!' in str(context.exception))
+
+    def testPicoGreenLoad(self):
+        # Test that the function can read the pico green data
+        self.assertEqual(len(self.picogreen_data), 5)
+        self.assertEqual(len(self.picogreen_data['122']['IJKL']), 3)
+        self.assertEqual(self.picogreen_data['122']['IJKL'][0][0][15], 'A2')
 
     def testBuild_sample_objects(self):
         # Test that the function can build sample objects
