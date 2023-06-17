@@ -11,7 +11,7 @@
             "program": "./scripts/parseSIPoutput.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": [ "-b", "-d", "80" ]
+            "args": [ "-b", "-d", "77"]
         },
         {
             "type": "R-Debugger",
