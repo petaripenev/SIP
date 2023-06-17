@@ -118,11 +118,11 @@ class FractionatedSIPSample(DNAextractionSample):
 
     def removeFractionsBelowDNACutoff(self, cutoff):
         '''Remove fractions without DNA'''
-        self.concentrations = [conc for conc,dna in zip(self.concentrations, self.remainingDNAperFraction) if dna > cutoff]
-        self.densities = [dens for dens,dna in zip(self.densities, self.remainingDNAperFraction) if dna > cutoff]
-        self.wells = [well for well,dna in zip(self.wells, self.remainingDNAperFraction) if dna > cutoff]
-        self.fraction_volumes = [vol for vol,dna in zip(self.fraction_volumes, self.remainingDNAperFraction) if dna > cutoff]
+        self.concentrations = [conc for conc,dna in zip(self.concentrations, self.remainingDNAperFraction) if dna >= cutoff]
+        self.densities = [dens for dens,dna in zip(self.densities, self.remainingDNAperFraction) if dna >= cutoff]
+        self.wells = [well for well,dna in zip(self.wells, self.remainingDNAperFraction) if dna >= cutoff]
+        self.fraction_volumes = [vol for vol,dna in zip(self.fraction_volumes, self.remainingDNAperFraction) if dna >= cutoff]
         self.area = [a*b for a,b in zip(self.densities,self.concentrations)]
         self.weighted_mean_density = sum(self.area)/sum(self.concentrations)
-        self.remainingDNAperFraction = [dna for dna in self.remainingDNAperFraction if dna > cutoff]
+        self.remainingDNAperFraction = [dna for dna in self.remainingDNAperFraction if dna >= cutoff]
 
