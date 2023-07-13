@@ -109,7 +109,7 @@ def build_sample_objects(metadata_file, samples, picogreen_data=False):
                 wells = samples[db_id][3],
                 densities = samples[db_id][4],
                 concentrations = [(abs(x)+x)/2 for x in samples[db_id][5]],
-                fraction_volumes = samples[db_id][6],
+                fraction_volumes = [int(x)-2 for x in samples[db_id][6]],
             )
             if pico_stdevs:
                 current_sample.conc_stdevs = pico_stdevs
@@ -395,6 +395,10 @@ def print_wells_for_binning(isotopePairs):
             for sample in dict_for_print[batch][plate]:
                 print(f'\t\tOld ID {sample.id}')
                 for i, wells in enumerate(sample.chunked_wells):
+                    #average_conc = [np.average(x) for x in sample.chunked_concentrations][i]
+                    #print(f'{sample.extraction_id}_{i+1},{average_conc:.2f}')
+                    #for well in wells:
+                    #    print(f'{batch},{plate},{sample.extraction_id}_{i+1},{well},35')
                     print(f'\t\t\t{sample.extraction_id}_{i+1}: {" ".join(wells)}')
 
 def main(commandline_arguments):
@@ -528,7 +532,7 @@ def main(commandline_arguments):
         #print('\t\t', '\t'.join(['-'.join(f'{y:.1f}' for y in x) for x in sample.chunked_fractions]))
         #print('\t\t', '\t'.join(['-'.join(f'{y:.1f}' for y in x) for x in sample.chunked_concentrations]))
         #print(f'{str(sample)}\t','\t'.join([str(sum(x)) for x in sample.chunked_fractions]))
-    plotAllSampleCurves(isotopePairs, 'figures/all_samples_bins_v6_fixed.svg')
+    #plotAllSampleCurves(isotopePairs, 'figures/all_samples_bins_v6_fixed.svg')
 
 if __name__ == '__main__':
     main(sys.argv[1:])
