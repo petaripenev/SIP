@@ -3,3 +3,5 @@ processing/rScript/*
 .coverage
 *desktop.ini*
 *.docx
+venv/*
+z_arx/*
