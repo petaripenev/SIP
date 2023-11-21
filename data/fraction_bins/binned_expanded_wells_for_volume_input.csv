@@ -1,4 +1,4 @@
-batch,plate,sample,well,volume
+batch,plate,sample_id,well,volume
 122,ABCD,z16_1,E1,24
 122,ABCD,z16_1,F1,24
 122,ABCD,z16_1,G1,24
